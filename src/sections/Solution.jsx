@@ -7,13 +7,13 @@ export default function Solution() {
   return (
     <section className="py-24 md:py-32 bg-cream-100">
       <div className="container-x grid md:grid-cols-2 gap-16 items-center">
-        <div className="aspect-square rounded-[2.5rem] overflow-hidden bg-cream-200">
+        <div className="rounded-[2.5rem] overflow-hidden bg-cream-200">
           <SmartImage
             src={IMAGES.family}
             alt="AromaFit HUSH family product shot"
             label="Family product shot"
-            className="w-full h-full"
-            imgClassName="object-cover w-full h-full"
+            className="w-full h-auto"
+            imgClassName="object-contain w-full h-auto"
           />
         </div>
 
