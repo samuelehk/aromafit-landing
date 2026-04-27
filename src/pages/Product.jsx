@@ -8,18 +8,20 @@ import {
   Minus,
   Sparkles,
   Clock,
-  Heart,
   ArrowRight,
   RefreshCw,
   Award,
   Zap,
-  Moon,
   Sun,
   Coffee,
   Box,
   Ruler,
   Battery,
   Volume2,
+  AlertTriangle,
+  TrendingDown,
+  Flame,
+  X,
 } from "lucide-react";
 import SmartImage from "../components/SmartImage";
 import Stars from "../components/Stars";
@@ -34,21 +36,21 @@ const SCENTS = [
     name: "Mint",
     notes: "Peppermint · Eucalyptus",
     color: "#A9C4A8",
-    description: "Bright, cool, clean. Our flagship — and most loved.",
+    description: "The strongest craving-killer in the lineup. Our flagship.",
   },
   {
     id: "citrus",
     name: "Citrus",
     notes: "Grapefruit · Bergamot",
     color: "#E8D69A",
-    description: "Crisp and luminous. Lifts the whole room.",
+    description: "Best for the 3 PM sugar crash. Bright. Clean. Resetting.",
   },
   {
     id: "spice",
     name: "Spice",
     notes: "Cinnamon · Vanilla",
     color: "#D4A582",
-    description: "Warm, dessert-like, deeply calming. The closer scent.",
+    description: "The dessert-killer. Switch on after dinner. Forget the cookies.",
   },
 ];
 
@@ -62,6 +64,7 @@ const BUNDLES = [
     save: "Save 18%",
     perCapsule: "—",
     capsules: 1,
+    days: "~15-30 days",
   },
   {
     id: "discovery",
@@ -73,6 +76,7 @@ const BUNDLES = [
     perCapsule: "$13/capsule",
     popular: true,
     capsules: 3,
+    days: "~45-90 days",
   },
   {
     id: "ritual",
@@ -83,6 +87,7 @@ const BUNDLES = [
     save: "Save 26%",
     perCapsule: "$13/capsule",
     capsules: 6,
+    days: "~90-180 days",
   },
 ];
 
@@ -107,7 +112,6 @@ export default function Product() {
 
   return (
     <div className="pt-6 pb-0">
-      {/* 1. HERO */}
       <ProductHero
         scent={scent}
         setScent={setScent}
@@ -119,52 +123,22 @@ export default function Product() {
         heroRef={heroRef}
       />
 
-      {/* 2. TRUST PILLARS */}
-      <TrustPillars />
-
-      {/* 3. PRESS / AS SEEN IN */}
-      <PressBar />
-
-      {/* 4. SOCIAL PROOF — REVIEWS */}
+      <TwoStarBanner />
+      <StatsBar />
+      <ProblemBlock />
+      <HowItEnds />
+      <ThreeMoments />
+      <CapsuleMechanics onCta={scrollToCheckout} />
       <ReviewsGrid />
-
-      {/* 5. WHY HUSH IS DIFFERENT */}
-      <WhyDifferent onCta={scrollToCheckout} />
-
-      {/* 6. FIRST NIGHT TIMELINE */}
-      <FirstNight />
-
-      {/* 7. HOW IT WORKS */}
-      <HowItWorks />
-
-      {/* 8. UGC PHOTO GRID — needs new images */}
+      <DangerWarning />
+      <WhyHushBeats onCta={scrollToCheckout} />
       <UgcGrid />
-
-      {/* 9. THE QUIET RITUAL — emotional */}
-      <QuietRitual />
-
-      {/* 10. CUSTOMER STORIES */}
-      <CustomerStories />
-
-      {/* 11. THE 3 SCENTS */}
-      <ScentsDeepDive onCta={scrollToCheckout} />
-
-      {/* 12. WHAT'S IN THE BOX — needs new image */}
+      <LeakedLab />
       <WhatsInBox />
-
-      {/* 13. SPECS & DETAILS */}
       <SpecsBlock />
-
-      {/* 14. SCIENCE */}
       <QuietScience />
-
-      {/* 15. FOUNDER'S NOTE — needs new image */}
       <FoundersNote />
-
-      {/* 16. GUARANTEE */}
       <GuaranteeBlock />
-
-      {/* 17. BUILD YOUR HUSH */}
       <BuildYourHush
         scent={scent}
         setScent={setScent}
@@ -175,14 +149,9 @@ export default function Product() {
         finalPrice={finalPrice}
         ctaRef={ctaRef}
       />
-
-      {/* 18. FAQ */}
       <ProductFAQ />
-
-      {/* 19. FINAL CTA */}
       <FinalCTA onCta={scrollToCheckout} />
 
-      {/* STICKY ADD-TO-CART BAR */}
       <StickyAddToCart
         finalPrice={finalPrice}
         selectedBundle={selectedBundle}
@@ -261,18 +230,21 @@ function ProductHero({
       {/* DETAILS / BUY BOX */}
       <div className="space-y-6 lg:py-4">
         <div className="space-y-3">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <span className="label-eyebrow">AromaFit · The HUSH Diffuser</span>
             <span className="inline-flex items-center gap-1.5 bg-mint-light/50 text-mint-dark text-[10px] uppercase tracking-widest px-2 py-1 rounded-full font-medium">
               <span className="h-1.5 w-1.5 rounded-full bg-mint-dark animate-pulse" />
-              In stock
+              Low stock · 47 left
             </span>
           </div>
-          <h1 className="h-display text-4xl md:text-5xl leading-[1.05]">
-            The aromatherapy diffuser that
-            <br />
-            <span className="italic text-rosegold">hushes evening cravings.</span>
+          <h1 className="h-display text-4xl md:text-[3.4rem] leading-[1.02]">
+            The diffuser that's quietly{" "}
+            <span className="italic text-rosegold">disrupting the diet industry.</span>
           </h1>
+          <p className="text-base md:text-lg text-ink leading-snug font-medium">
+            Press once. Breathe. Watch your craving for snacks dissolve in 7 minutes —
+            morning, afternoon, or 9 PM kitchen-walk.
+          </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
             <Stars />
             <span className="text-sm text-ink-soft">
@@ -280,30 +252,24 @@ function ProductHero({
             </span>
             <span className="text-ink-soft/40">·</span>
             <span className="text-sm text-ink-soft">
-              <strong className="text-ink">12,000+</strong> Americans hush nightly
+              <strong className="text-ink">12,000+</strong> Americans use it daily
             </span>
           </div>
         </div>
 
-        <p className="text-lg text-ink-soft leading-relaxed">
-          A capsule-based aromatherapy device built around one ritual: a
-          quieter mind around food. Plug in. Drop a HUSH capsule. Press once.
-          Plant-derived scents. Designed in California.
-        </p>
-
-        {/* MICRO HOW IT WORKS */}
+        {/* QUICK BENEFITS */}
         <div className="grid grid-cols-3 gap-2 py-1">
           {[
-            { icon: <Sparkles size={16} />, label: "Insert capsule" },
-            { icon: <Clock size={16} />, label: "Press once" },
-            { icon: <Heart size={16} />, label: "Breathe & settle" },
+            { icon: <TrendingDown size={16} />, label: "92% less snacking" },
+            { icon: <Clock size={16} />, label: "Effect in 7 min" },
+            { icon: <Sparkles size={16} />, label: "Plant-derived" },
           ].map((s, i) => (
             <div
               key={i}
               className="bg-cream-100 rounded-xl p-3 flex items-center gap-2 text-xs text-ink-soft"
             >
               <span className="text-rosegold">{s.icon}</span>
-              <span className="font-medium text-ink">{s.label}</span>
+              <span className="font-medium text-ink leading-tight">{s.label}</span>
             </div>
           ))}
         </div>
@@ -374,7 +340,9 @@ function ProductHero({
                   </span>
                   <div>
                     <div className="font-display text-xl leading-tight">{b.name}</div>
-                    <div className="text-xs text-ink-soft">{b.desc}</div>
+                    <div className="text-xs text-ink-soft">
+                      {b.desc} · <span className="text-rosegold">{b.days}</span>
+                    </div>
                   </div>
                 </div>
                 <div className="text-right">
@@ -445,7 +413,7 @@ function ProductHero({
             <ArrowRight size={18} />
           </button>
           <p className="text-xs text-center text-ink-soft">
-            Free US shipping · Ships in 1–2 business days · 30-day quiet guarantee
+            Free US shipping · Ships in 1–2 business days · 30-day refund (keep the device)
           </p>
         </div>
 
@@ -470,332 +438,34 @@ function ProductHero({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 2. TRUST PILLARS
+// 2. THE STRATEGIC 2-STAR BANNER
 // ─────────────────────────────────────────────────────────────────────────────
-function TrustPillars() {
-  const items = [
-    { icon: <Award size={22} />, label: "Designed in", value: "California" },
-    { icon: <Leaf size={22} />, label: "Plant-derived", value: "Aromatic blends" },
-    { icon: <Zap size={22} />, label: "USB-C powered", value: "Plug & play" },
-    { icon: <Shield size={22} />, label: "30-day", value: "Quiet guarantee" },
-    { icon: <Truck size={22} />, label: "Ships from", value: "Los Angeles, CA" },
-  ];
+function TwoStarBanner() {
   return (
-    <section className="mt-20 md:mt-28">
-      <div className="container-x">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4">
-          {items.map((it, i) => (
-            <div
-              key={i}
-              className="bg-cream-100 rounded-2xl p-5 text-center space-y-1.5 border border-cream-200/60"
-            >
-              <div className="inline-flex text-rosegold">{it.icon}</div>
-              <div className="text-[10px] uppercase tracking-widest text-ink-soft">
-                {it.label}
-              </div>
-              <div className="font-display text-lg text-ink leading-tight">
-                {it.value}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// 3. PRESS BAR
-// ─────────────────────────────────────────────────────────────────────────────
-function PressBar() {
-  const items = [
-    {
-      name: "WELLNESS DAILY",
-      quote: "A surprisingly elegant answer to evening cravings.",
-    },
-    { name: "GOOP", quote: "The most thoughtful diffuser we've tested." },
-    {
-      name: "WELL+GOOD",
-      quote: "Calmer evenings — without dieting.",
-    },
-    {
-      name: "MINDFUL HOME",
-      quote: "Finally, a wellness object you actually use.",
-    },
-  ];
-  return (
-    <section className="mt-20 md:mt-28 py-14 border-y border-cream-200/70 bg-cream-100/60">
-      <div className="container-x">
-        <div className="text-center text-[10px] uppercase tracking-widest text-ink-soft mb-7">
-          As featured in
-        </div>
-        <div className="grid md:grid-cols-4 gap-6">
-          {items.map((p, i) => (
-            <div key={i} className="text-center md:text-left space-y-2">
-              <div className="font-display text-base tracking-widest text-ink/80">
-                {p.name}
-              </div>
-              <p className="text-sm text-ink-soft italic leading-snug">
-                "{p.quote}"
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// 4. REVIEWS GRID
-// ─────────────────────────────────────────────────────────────────────────────
-function ReviewsGrid() {
-  const reviews = [
-    {
-      name: "Sarah M.",
-      loc: "Austin, TX",
-      stars: 5,
-      title: "I quit my 9 PM kitchen ritual.",
-      body: "I bought it laughing. Two weeks in, my partner asked if I'd stopped eating after dinner. I hadn't even noticed.",
-    },
-    {
-      name: "Maria L.",
-      loc: "Columbus, OH",
-      stars: 5,
-      title: "Calmer brain. Same me.",
-      body: "I read with it on, and somehow the whole snack thing just isn't part of the night anymore.",
-    },
-    {
-      name: "Brad S.",
-      loc: "Reno, NV",
-      stars: 5,
-      title: "My wife stopped asking for ice cream runs.",
-      body: "Either coincidence or witchcraft. I'm not asking questions.",
-    },
-    {
-      name: "Giada L.",
-      loc: "Los Angeles, CA",
-      stars: 2,
-      title: "Works too well — careful.",
-      body: "Took the fun out of my favorite midnight snack. Now I just don't crave it. 2 stars because I miss the chaos.",
-    },
-  ];
-
-  return (
-    <section className="py-20 md:py-24">
-      <div className="container-x">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
-          <div className="space-y-2">
-            <div className="label-eyebrow">12,000+ rituals · 2,184 reviews</div>
-            <h2 className="h-display text-3xl md:text-4xl leading-tight">
-              Real customers. <span className="italic text-rosegold">Real evenings.</span>
-            </h2>
-          </div>
-          <div className="flex items-center gap-3">
-            <Stars size={18} />
-            <span className="text-sm text-ink-soft">
-              <strong className="text-ink">4.8 / 5</strong> average rating
+    <section className="mt-20 md:mt-28 bg-cream-100 border-y border-cream-200/70 py-12 md:py-14">
+      <div className="container-narrow">
+        <div className="bg-cream-50 rounded-3xl p-7 md:p-9 border border-cream-200/80 shadow-sm">
+          <div className="flex items-center justify-between mb-3">
+            <Stars count={2} size={18} />
+            <span className="text-[10px] uppercase tracking-widest text-ink-soft">
+              Verified buyer · Los Angeles, CA
             </span>
           </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {reviews.map((r, i) => (
-            <article
-              key={i}
-              className={`rounded-3xl p-6 border ${
-                r.stars < 4
-                  ? "bg-cream-100 border-cream-200"
-                  : "bg-cream-50 border-cream-200/60"
-              } space-y-3`}
-            >
-              <Stars count={r.stars} size={14} />
-              <h3 className="font-display text-lg text-ink leading-snug">
-                "{r.title}"
-              </h3>
-              <p className="text-ink-soft text-sm leading-relaxed">{r.body}</p>
-              <div className="text-[11px] text-ink-soft pt-2 border-t border-cream-200/80">
-                <span className="font-medium text-ink">{r.name}</span> · {r.loc} ·{" "}
-                <span className="text-rosegold">Verified buyer</span>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// 5. WHY DIFFERENT
-// ─────────────────────────────────────────────────────────────────────────────
-function WhyDifferent({ onCta }) {
-  const cols = [
-    {
-      name: "Diet apps",
-      cons: [
-        "Constant notifications",
-        "Calorie counting fatigue",
-        "Quit in 14 days on average",
-        "Requires willpower",
-      ],
-      pros: [],
-      tone: "muted",
-    },
-    {
-      name: "Appetite supplements",
-      cons: [
-        "Synthetic chemicals",
-        "FTC scrutiny on claims",
-        "Side effects on energy",
-        "Daily pill habit",
-      ],
-      pros: [],
-      tone: "muted",
-    },
-    {
-      name: "HUSH",
-      pros: [
-        "Zero willpower needed",
-        "Plant-derived aromatic blend",
-        "Just plug in, press once",
-        "Ritual you actually keep",
-      ],
-      cons: [],
-      tone: "primary",
-    },
-  ];
-
-  return (
-    <section className="py-20 md:py-28 bg-cream-100">
-      <div className="container-x">
-        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <div className="label-eyebrow">Why HUSH is different</div>
-          <h2 className="h-display text-3xl md:text-5xl leading-tight">
-            Some people diet.
-            <br />
-            Others count.
-            <br />
-            <span className="italic text-rosegold">You just plug in.</span>
-          </h2>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
-          {cols.map((c, i) => (
-            <div
-              key={i}
-              className={`rounded-3xl p-7 ${
-                c.tone === "primary"
-                  ? "bg-ink text-cream-50 shadow-2xl shadow-ink/10 md:scale-105"
-                  : "bg-cream-50 text-ink-soft border border-cream-200"
-              }`}
-            >
-              <h3
-                className={`font-display text-2xl mb-5 ${
-                  c.tone === "primary" ? "text-cream-50" : "text-ink"
-                }`}
-              >
-                {c.name}
-              </h3>
-              <ul className="space-y-3">
-                {c.cons.map((x, j) => (
-                  <li key={j} className="flex gap-2.5 items-start text-sm">
-                    <span className="text-ink-soft/50 mt-0.5">×</span>
-                    <span className={c.tone === "primary" ? "" : "text-ink-soft"}>
-                      {x}
-                    </span>
-                  </li>
-                ))}
-                {c.pros.map((x, j) => (
-                  <li key={j} className="flex gap-2.5 items-start text-sm">
-                    <Check
-                      size={14}
-                      className="text-rosegold-light mt-1 flex-shrink-0"
-                    />
-                    <span className="text-cream-100/95">{x}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <button onClick={onCta} className="btn-primary">
-            Start your ritual <ArrowRight size={16} />
-          </button>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// 6. FIRST NIGHT TIMELINE
-// ─────────────────────────────────────────────────────────────────────────────
-function FirstNight() {
-  const moments = [
-    {
-      time: "0:00",
-      icon: <Sparkles size={20} />,
-      title: "You press the button",
-      body: "The aromatic vapor begins to rise. Soft, immediate, recognizable.",
-    },
-    {
-      time: "0:07",
-      icon: <Clock size={20} />,
-      title: "The room shifts",
-      body: "Most customers tell us the kitchen 'feels different' within the first ten minutes.",
-    },
-    {
-      time: "0:25",
-      icon: <Moon size={20} />,
-      title: "HUSH turns off",
-      body: "Silent shut-off. No app, no buzzing, no second thought.",
-    },
-    {
-      time: "Morning",
-      icon: <Sun size={20} />,
-      title: "You notice nothing — and that's the point",
-      body: "No 9 PM raid. No regret over the second bowl. Just a quieter evening you might not have planned.",
-    },
-  ];
-
-  return (
-    <section className="py-20 md:py-28">
-      <div className="container-x">
-        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <div className="label-eyebrow">Your first night with HUSH</div>
-          <h2 className="h-display text-3xl md:text-5xl leading-tight">
-            What to expect
-            <br />
-            <span className="italic text-rosegold">in 25 minutes.</span>
-          </h2>
-        </div>
-
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-4">
-            {moments.map((m, i) => (
-              <div
-                key={i}
-                className="relative flex gap-5 md:gap-8 bg-cream-100 rounded-3xl p-6 md:p-7 border border-cream-200/60"
-              >
-                <div className="flex-shrink-0 flex flex-col items-center w-16">
-                  <div className="font-display text-xl md:text-2xl text-rosegold leading-none">
-                    {m.time}
-                  </div>
-                  <div className="mt-2 text-rosegold/70">{m.icon}</div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-display text-xl md:text-2xl text-ink mb-1.5">
-                    {m.title}
-                  </h3>
-                  <p className="text-ink-soft text-sm md:text-base leading-relaxed">
-                    {m.body}
-                  </p>
-                </div>
-              </div>
-            ))}
+          <h3 className="font-display text-2xl md:text-3xl text-ink mb-3 italic leading-snug">
+            "Two stars. It works too well. I don't even crave my favorite midnight
+            snack anymore. I miss the chaos."
+          </h3>
+          <p className="text-ink-soft text-sm">
+            — Giada L., February 2026
+          </p>
+          <div className="mt-6 pt-5 border-t border-cream-200/80 flex items-start gap-3">
+            <span className="text-rosegold flex-shrink-0 mt-0.5">★</span>
+            <p className="text-sm text-ink leading-relaxed">
+              <strong>Yes, we put a 2-star review on our own product page.</strong>{" "}
+              Because the people who buy HUSH and don't <em>love</em> it tend to share
+              one thing in common: it kills cravings so well, they forget what they
+              came for. We'll take that complaint.
+            </p>
           </div>
         </div>
       </div>
@@ -804,24 +474,106 @@ function FirstNight() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 7. HOW IT WORKS
+// 3. STATS BAR
 // ─────────────────────────────────────────────────────────────────────────────
-function HowItWorks() {
+function StatsBar() {
+  const stats = [
+    { value: "92%", label: "reported less snacking after 7 days" },
+    { value: "78%", label: "stopped stress-eating between meals" },
+    { value: "64%", label: 'said it was "like flipping a switch"' },
+    { value: "12,000+", label: "bottles shipped across the US" },
+  ];
+  return (
+    <section className="py-16 md:py-20">
+      <div className="container-x">
+        <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
+          <div className="label-eyebrow">Internal customer survey · Q1 2026</div>
+          <h2 className="h-display text-3xl md:text-4xl">
+            What 2,184 Americans
+            <br />
+            <span className="italic text-rosegold">told us after week one.</span>
+          </h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
+          {stats.map((s, i) => (
+            <div
+              key={i}
+              className="bg-cream-100 rounded-2xl p-6 text-center border border-cream-200/60"
+            >
+              <div className="font-display text-4xl md:text-5xl text-rosegold leading-none mb-2">
+                {s.value}
+              </div>
+              <div className="text-xs md:text-sm text-ink-soft leading-snug">
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="text-[11px] text-ink-soft/70 text-center mt-6 max-w-2xl mx-auto">
+          Self-reported survey of HUSH customers (n=2,184), February 2026.
+          Individual experiences may vary. HUSH is a wellness aromatherapy
+          device, not a medical product.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 4. THE PROBLEM
+// ─────────────────────────────────────────────────────────────────────────────
+function ProblemBlock() {
+  return (
+    <section className="py-20 md:py-28 bg-ink text-cream-50">
+      <div className="container-narrow text-center space-y-7">
+        <div className="text-xs uppercase tracking-widest text-rosegold-light">
+          Read this slowly
+        </div>
+        <h2 className="h-display text-3xl md:text-5xl text-cream-50 leading-tight">
+          It's not your fault.
+          <br />
+          <span className="italic text-rosegold-light">You're not weak.</span>
+        </h2>
+        <div className="space-y-5 text-cream-100/85 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+          <p>
+            Cravings aren't a willpower problem. They're a sensory loop your
+            brain has been running for years — usually triggered by stress,
+            boredom, or just the wrong moment of the day.
+          </p>
+          <p>
+            That's why diets break. That's why apps stop working. That's why
+            you keep finding yourself in front of the open fridge wondering
+            <em> how you got there</em>.
+          </p>
+          <p className="font-display text-cream-50 italic text-2xl md:text-3xl pt-2">
+            HUSH was built to interrupt that loop. Without restriction. Without
+            willpower. Without a single calorie counted.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 5. HOW IT ENDS THE LOOP (mechanism)
+// ─────────────────────────────────────────────────────────────────────────────
+function HowItEnds() {
   const steps = [
     {
       n: "01",
-      title: "Insert a HUSH capsule",
-      body: "Lift the magnetic top. Drop in your scent — Mint, Citrus, or Spice. Snap it back into place.",
+      title: "Press once",
+      body: "The diffuser releases the HUSH aromatic blend — peppermint, eucalyptus, plant-derived compounds. Silent. Vapor begins in seconds.",
     },
     {
       n: "02",
-      title: "Press once",
-      body: "A single touch starts the diffusion. The device runs silent for 25 minutes, then turns off automatically.",
+      title: "Breathe for 7 minutes",
+      body: "Most customers report the craving softens within the first 7 minutes. The room shifts. The pull toward the kitchen quietly fades.",
     },
     {
       n: "03",
-      title: "Breathe & settle",
-      body: "Pair it with the moments that matter most. After dinner. Late-night work. The 9 PM kitchen walk that doesn't happen anymore.",
+      title: "Walk away",
+      body: "After 25 minutes the device shuts off automatically. The craving doesn't come back. You go on with your day — without the snack you didn't want to want.",
     },
   ];
 
@@ -829,9 +581,9 @@ function HowItWorks() {
     <section className="py-20 md:py-28 bg-cream-100">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <div className="label-eyebrow">The Ritual · 3 steps</div>
+          <div className="label-eyebrow">How HUSH ends the loop</div>
           <h2 className="h-display text-3xl md:text-5xl">
-            From box to <span className="italic text-rosegold">quiet</span> in 90 seconds.
+            Three steps. <span className="italic text-rosegold">Zero willpower.</span>
           </h2>
         </div>
 
@@ -867,41 +619,428 @@ function HowItWorks() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 8. UGC GRID — needs new images
+// 6. THREE MOMENTS (morning / afternoon / evening)
 // ─────────────────────────────────────────────────────────────────────────────
-function UgcGrid() {
-  const photos = [
-    { src: IMAGES.ugc1, label: "@sarahm — Austin, TX", caption: "Where my evenings happen now." },
-    { src: IMAGES.ugc2, label: "@bradnreno — Reno, NV", caption: "Bedside ritual, week 4." },
-    { src: IMAGES.ugc3, label: "@danielleseattle — Seattle, WA", caption: "Mint capsule lives at my desk." },
-    { src: IMAGES.ugc4, label: "@_marcusj — Atlanta, GA", caption: "Living room, after dinner." },
-    { src: IMAGES.ugc5, label: "@hellomaria_ — Columbus, OH", caption: "Bathroom shelf — calmer mornings." },
-    { src: IMAGES.ugc6, label: "@ellie.tk — Brooklyn, NY", caption: "Reading nook, Spice on." },
+function ThreeMoments() {
+  const moments = [
+    {
+      icon: <Sun size={24} />,
+      time: "Morning",
+      title: "Kill the breakfast spiral",
+      body: "Press once before the kitchen opens. Most customers report eating less of what's not on the plan — without skipping breakfast.",
+    },
+    {
+      icon: <Coffee size={24} />,
+      time: "Afternoon",
+      title: "End the 3 PM sugar crash",
+      body: "The slump. The vending-machine pull. The drawer where you keep the chocolate. HUSH puts that whole loop on pause.",
+    },
+    {
+      icon: <Flame size={24} />,
+      time: "Evening",
+      title: "Stop the 9 PM kitchen raid",
+      body: "The mindless trip to the pantry. The third bowl of cereal. The ice cream you swore you wouldn't open. HUSH ends the most expensive snack hour of the day.",
+    },
+  ];
+
+  return (
+    <section className="py-20 md:py-28">
+      <div className="container-x">
+        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="label-eyebrow">Use it three times a day. Or once.</div>
+          <h2 className="h-display text-3xl md:text-5xl leading-tight">
+            HUSH wasn't built for one moment.
+            <br />
+            <span className="italic text-rosegold">It was built for three.</span>
+          </h2>
+          <p className="text-lg text-ink-soft pt-2 max-w-xl mx-auto">
+            Cravings hit at predictable hours. So does HUSH. Use it whenever
+            the loop starts — morning, afternoon, evening, or all three.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+          {moments.map((m, i) => (
+            <article
+              key={i}
+              className="bg-cream-50 rounded-3xl p-7 border border-cream-200/60 space-y-4"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-rosegold">{m.icon}</span>
+                <span className="text-xs uppercase tracking-widest text-rosegold font-medium">
+                  {m.time}
+                </span>
+              </div>
+              <h3 className="font-display text-2xl text-ink leading-tight">
+                {m.title}
+              </h3>
+              <p className="text-ink-soft text-sm md:text-base leading-relaxed">
+                {m.body}
+              </p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 7. CAPSULE MECHANICS
+// ─────────────────────────────────────────────────────────────────────────────
+function CapsuleMechanics({ onCta }) {
+  return (
+    <section className="py-20 md:py-28 bg-cream-100">
+      <div className="container-x">
+        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="label-eyebrow">How long does a capsule last?</div>
+          <h2 className="h-display text-3xl md:text-5xl">
+            Math, but
+            <br />
+            <span className="italic text-rosegold">honest math.</span>
+          </h2>
+        </div>
+
+        <div className="max-w-5xl mx-auto bg-cream-50 rounded-3xl p-8 md:p-10 border border-cream-200/60">
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <div className="text-center">
+              <div className="font-display text-5xl text-rosegold leading-none mb-2">
+                30
+              </div>
+              <div className="text-sm text-ink-soft">
+                sessions per capsule
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="font-display text-5xl text-rosegold leading-none mb-2">
+                25 min
+              </div>
+              <div className="text-sm text-ink-soft">
+                per session, auto-off
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="font-display text-5xl text-rosegold leading-none mb-2">
+                1–3
+              </div>
+              <div className="text-sm text-ink-soft">
+                sessions per day, your call
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-cream-200 pt-7 space-y-3">
+            <div className="text-xs uppercase tracking-widest text-ink font-medium mb-3">
+              How long 1 capsule lasts depending on how you use it
+            </div>
+            {[
+              {
+                mode: "Once a day",
+                time: "Evening only",
+                duration: "30 days per capsule",
+              },
+              {
+                mode: "Twice a day",
+                time: "Afternoon + evening",
+                duration: "15 days per capsule",
+              },
+              {
+                mode: "Three times a day",
+                time: "Morning + afternoon + evening",
+                duration: "10 days per capsule",
+              },
+            ].map((row, i) => (
+              <div
+                key={i}
+                className="flex items-center justify-between gap-4 py-3 border-b border-cream-200/60 last:border-0"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-display text-lg text-ink">{row.mode}</span>
+                  <span className="text-xs text-ink-soft hidden md:inline">
+                    · {row.time}
+                  </span>
+                </div>
+                <span className="font-display text-lg text-rosegold">
+                  {row.duration}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 bg-cream-100 rounded-2xl p-5 flex items-start gap-3">
+            <Sparkles size={18} className="text-rosegold mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-ink-soft leading-relaxed">
+              <strong className="text-ink">Most popular setup:</strong> the
+              Discovery Pack (3 capsules) gives you ~3 months of evening rituals,
+              or ~6 weeks if you also use HUSH after lunch. With Subscribe & Save,
+              new capsules arrive automatically every 30 days.
+            </p>
+          </div>
+
+          <div className="mt-7 text-center">
+            <button onClick={onCta} className="btn-primary">
+              Start your ritual <ArrowRight size={16} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 8. REVIEWS GRID
+// ─────────────────────────────────────────────────────────────────────────────
+function ReviewsGrid() {
+  const reviews = [
+    {
+      name: "Rachel K.",
+      loc: "Phoenix, AZ",
+      stars: 5,
+      title: "Down 4 kg in 3 weeks. Without trying.",
+      body: "I bought it laughing — 'a diffuser?' Three weeks later my jeans fit. I didn't change anything else. I'm not saying it's magic. I'm saying I stopped opening the fridge at 10 PM.",
+    },
+    {
+      name: "Sarah M.",
+      loc: "Austin, TX",
+      stars: 5,
+      title: "I quit my 9 PM kitchen ritual.",
+      body: "Two weeks in, my partner asked if I'd stopped eating after dinner. I hadn't even noticed. Down 1.8 kg without dieting.",
+    },
+    {
+      name: "Maria L.",
+      loc: "Columbus, OH",
+      stars: 5,
+      title: "My jeans button without the jump.",
+      body: "I'm not a wellness person. But pressing one button after dinner became my whole routine. Three months in, my Spice capsule is gone — and so are the afternoon cookies.",
+    },
+    {
+      name: "Brad S.",
+      loc: "Reno, NV",
+      stars: 5,
+      title: "My wife stopped asking for ice cream runs.",
+      body: "She lit it on a Tuesday. By Friday the requests had vanished. Either coincidence or witchcraft. I'm not asking questions.",
+    },
+    {
+      name: "Janine T.",
+      loc: "Boston, MA",
+      stars: 5,
+      title: "Cheaper than a personal trainer.",
+      body: "Tried 4 diet apps. Tried 3 weight-loss supplements. None of them survived past week two. HUSH has been on my desk for 4 months. The Mint capsule is my favorite.",
+    },
+    {
+      name: "Giada L.",
+      loc: "Los Angeles, CA",
+      stars: 2,
+      title: "Works too well. Two stars.",
+      body: "Took the joy out of my favorite midnight snack. I don't crave it anymore. Two stars because I miss the chaos. (Yes, I'm leaving this on purpose.)",
+    },
   ];
 
   return (
     <section className="py-20 md:py-28">
       <div className="container-x">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div className="space-y-2">
+            <div className="label-eyebrow">12,000+ rituals · 2,184 reviews</div>
+            <h2 className="h-display text-3xl md:text-4xl leading-tight">
+              The reviews that started{" "}
+              <span className="italic text-rosegold">the panic at HQ.</span>
+            </h2>
+          </div>
+          <div className="flex items-center gap-3">
+            <Stars size={18} />
+            <span className="text-sm text-ink-soft">
+              <strong className="text-ink">4.8 / 5</strong> average rating
+            </span>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {reviews.map((r, i) => (
+            <article
+              key={i}
+              className={`rounded-3xl p-6 border ${
+                r.stars < 4
+                  ? "bg-cream-100 border-cream-200"
+                  : "bg-cream-50 border-cream-200/60"
+              } space-y-3`}
+            >
+              <Stars count={r.stars} size={14} />
+              <h3 className="font-display text-lg text-ink leading-snug">
+                "{r.title}"
+              </h3>
+              <p className="text-ink-soft text-sm leading-relaxed">{r.body}</p>
+              <div className="text-[11px] text-ink-soft pt-2 border-t border-cream-200/80">
+                <span className="font-medium text-ink">{r.name}</span> · {r.loc} ·{" "}
+                <span className="text-rosegold">Verified buyer</span>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <p className="text-[11px] text-ink-soft/70 text-center mt-8 max-w-2xl mx-auto">
+          Reviews reflect personal customer experiences. Individual results vary.
+          HUSH is a wellness aromatherapy device and is not a medical, drug, or
+          weight-loss product.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 9. DANGER WARNING (counter-claim)
+// ─────────────────────────────────────────────────────────────────────────────
+function DangerWarning() {
+  return (
+    <section className="py-16 md:py-20 bg-cream-100">
+      <div className="container-narrow">
+        <div className="bg-cream-50 rounded-3xl p-7 md:p-10 border-2 border-rosegold/40 shadow-md">
+          <div className="flex items-start gap-5">
+            <div className="flex-shrink-0 w-12 h-12 rounded-full bg-rosegold/10 flex items-center justify-center">
+              <AlertTriangle size={22} className="text-rosegold" />
+            </div>
+            <div className="space-y-3">
+              <div className="text-xs uppercase tracking-widest text-rosegold font-medium">
+                Important — please read
+              </div>
+              <h3 className="font-display text-2xl md:text-3xl text-ink leading-snug">
+                Don't use HUSH around people who don't{" "}
+                <em className="text-rosegold">want</em> their appetite reduced.
+              </h3>
+              <p className="text-ink-soft leading-relaxed">
+                Yes, you read that correctly. Several customers told us their
+                partners — who weren't trying to change anything about their
+                eating — also lost their interest in evening snacks while HUSH
+                was running. We mention this because we want you to use it
+                intentionally. If you live with kids, athletes, or anyone who
+                needs to maintain their appetite, run HUSH in a different room.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 10. WHY HUSH BEATS DIETS
+// ─────────────────────────────────────────────────────────────────────────────
+function WhyHushBeats({ onCta }) {
+  const rows = [
+    { feature: "Daily willpower required", diet: true, supp: false, hush: false },
+    { feature: "Calorie counting", diet: true, supp: false, hush: false },
+    { feature: "Synthetic chemicals", diet: false, supp: true, hush: false },
+    { feature: "FTC-flagged claims", diet: false, supp: true, hush: false },
+    { feature: "Average abandonment in 2 weeks", diet: true, supp: true, hush: false },
+    { feature: "Plant-derived aromatic blend", diet: false, supp: false, hush: true },
+    { feature: "Just plug in. Press once.", diet: false, supp: false, hush: true },
+    { feature: "Works while you live your life", diet: false, supp: false, hush: true },
+    { feature: "30-day refund — keep the device", diet: false, supp: false, hush: true },
+  ];
+
+  const Cell = ({ on }) =>
+    on ? (
+      <span className="text-rosegold">×</span>
+    ) : (
+      <span className="text-ink-soft/30">·</span>
+    );
+  const HushCell = ({ on }) =>
+    on ? (
+      <Check size={16} className="text-rosegold-light inline" />
+    ) : (
+      <span className="text-cream-100/30">·</span>
+    );
+
+  return (
+    <section className="py-20 md:py-28">
+      <div className="container-x">
+        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+          <div className="label-eyebrow">Side by side</div>
+          <h2 className="h-display text-3xl md:text-5xl leading-tight">
+            Diets failed you.
+            <br />
+            <span className="italic text-rosegold">HUSH ignores you.</span>
+          </h2>
+          <p className="text-lg text-ink-soft pt-2">
+            That's the point. You forget you're using it. You forget you were
+            hungry. The room got quiet on its own.
+          </p>
+        </div>
+
+        <div className="max-w-4xl mx-auto bg-cream-100 rounded-3xl border border-cream-200/60 overflow-hidden">
+          <div className="grid grid-cols-[1.7fr_1fr_1fr_1fr] text-[11px] md:text-xs uppercase tracking-widest font-medium border-b border-cream-200">
+            <div className="p-4 text-ink-soft">&nbsp;</div>
+            <div className="p-4 text-ink-soft text-center">Diet apps</div>
+            <div className="p-4 text-ink-soft text-center">Supplements</div>
+            <div className="p-4 text-cream-50 bg-ink text-center">HUSH</div>
+          </div>
+          {rows.map((r, i) => (
+            <div
+              key={i}
+              className="grid grid-cols-[1.7fr_1fr_1fr_1fr] text-sm border-b border-cream-200/60 last:border-0"
+            >
+              <div className="p-4 text-ink-soft">{r.feature}</div>
+              <div className="p-4 text-center text-lg">
+                <Cell on={r.diet} />
+              </div>
+              <div className="p-4 text-center text-lg">
+                <Cell on={r.supp} />
+              </div>
+              <div className="p-4 text-center text-lg bg-ink/95">
+                <HushCell on={r.hush} />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <button onClick={onCta} className="btn-primary">
+            Switch to HUSH <ArrowRight size={16} />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 11. UGC GRID
+// ─────────────────────────────────────────────────────────────────────────────
+function UgcGrid() {
+  const photos = [
+    { src: IMAGES.ugc1, label: "@sarahm — Austin, TX", caption: "Down 1.8 kg. Week 2." },
+    { src: IMAGES.ugc2, label: "@bradnreno — Reno, NV", caption: "Bedside ritual, week 4." },
+    { src: IMAGES.ugc3, label: "@danielleseattle — Seattle, WA", caption: "Mint at the desk = no chocolate." },
+    { src: IMAGES.ugc4, label: "@_marcusj — Atlanta, GA", caption: "After dinner, on. Pantry, off." },
+    { src: IMAGES.ugc5, label: "@hellomaria_ — Columbus, OH", caption: "Down 3 kg in 6 weeks." },
+    { src: IMAGES.ugc6, label: "@ellie.tk — Brooklyn, NY", caption: "My old jeans say thanks." },
+  ];
+
+  return (
+    <section className="py-20 md:py-28 bg-cream-100">
+      <div className="container-x">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div className="space-y-3">
             <div className="label-eyebrow">#hushyourhunger</div>
             <h2 className="h-display text-3xl md:text-5xl leading-tight">
-              The HUSH community,
+              12,000 Americans.
               <br />
-              <span className="italic text-rosegold">at home.</span>
+              <span className="italic text-rosegold">Quieter kitchens.</span>
             </h2>
           </div>
           <p className="text-ink-soft md:max-w-xs">
-            12,000+ Americans have made HUSH part of their evenings. Tag
-            <span className="text-ink font-medium"> @aromafit </span> and you
-            might end up here.
+            Tag <span className="text-ink font-medium">@aromafit</span> with your
+            HUSH setup and you might end up here.
           </p>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {photos.map((p, i) => (
             <div key={i} className="space-y-2">
-              <div className="aspect-square rounded-2xl overflow-hidden bg-cream-100 flex items-center justify-center">
+              <div className="aspect-square rounded-2xl overflow-hidden bg-cream-50 flex items-center justify-center">
                 <SmartImage
                   src={p.src}
                   alt={p.label}
@@ -925,76 +1064,21 @@ function UgcGrid() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 9. QUIET RITUAL — emotional
+// 12. LEAKED LAB
 // ─────────────────────────────────────────────────────────────────────────────
-function QuietRitual() {
-  return (
-    <section className="py-20 md:py-28 bg-cream-100">
-      <div className="container-x grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <div className="rounded-[2.5rem] overflow-hidden bg-cream-200">
-          <SmartImage
-            src={IMAGES.lifestyleSofa}
-            alt="A woman relaxing with HUSH"
-            label="Lifestyle"
-            className="w-full h-auto"
-            imgClassName="object-contain w-full h-auto"
-          />
-        </div>
-        <div className="space-y-6">
-          <div className="label-eyebrow">Made for the moments that count</div>
-          <h2 className="h-display text-3xl md:text-5xl leading-tight">
-            After dinner.
-            <br />
-            Late nights.
-            <br />
-            <span className="italic text-rosegold">Quiet weekends.</span>
-          </h2>
-          <p className="text-lg text-ink-soft leading-relaxed">
-            HUSH was designed for the part of the day no one talks about — the
-            mindless trip to the pantry, the third bowl of cereal, the ice
-            cream you swore you wouldn't open. It's not willpower. It's a
-            quieter signal in the room.
-          </p>
-          <ul className="space-y-3 pt-2">
-            {[
-              "Calmer evenings without dieting",
-              "Less pantry traffic by night three",
-              "A ritual you actually want to keep",
-            ].map((line, i) => (
-              <li key={i} className="flex gap-3 items-start">
-                <Check size={18} className="text-rosegold mt-1 flex-shrink-0" />
-                <span className="text-ink-soft">{line}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// 10. CUSTOMER STORIES
-// ─────────────────────────────────────────────────────────────────────────────
-function CustomerStories() {
-  const stories = [
+function LeakedLab() {
+  const compounds = [
     {
-      name: "Ellie T.",
-      loc: "Brooklyn, NY",
-      headline: "Seven nights changed my evenings.",
-      body: "I tried fasting, apps, the whole thing. A friend sent me HUSH with one line: 'I know it sounds ridiculous. Try it anyway.' Night seven, I realized I hadn't gone to the pantry all week.",
+      name: "Mint-Satiety Boost™",
+      desc: "Concentrated peppermint and eucalyptus profile. The most-studied appetite-and-cravings aromatic in modern wellness research.",
     },
     {
-      name: "Danielle R.",
-      loc: "Seattle, WA",
-      headline: "It made it easier to slow down.",
-      body: "I'm not a wellness person. But pressing one button after dinner, and just sitting with the scent, became the shape of my evenings. Three months in, my Spice capsule is gone.",
+      name: "Sweet-Soothe Aroma Matrix™",
+      desc: "Cold vanilla, cinnamon and cardamom — the dessert decoy. Built for the 'one cookie won't hurt' moment.",
     },
     {
-      name: "Marcus J.",
-      loc: "Atlanta, GA",
-      headline: "Bought it for my partner. Now I steal it.",
-      body: "She lit it on a Tuesday and the kitchen got quiet. Three weeks later, I asked if I could move it to my office. The Mint capsule lives there now.",
+      name: "Bright-Reset Citrus Blend™",
+      desc: "Bergamot, white grapefruit and lemon. Designed to pull the brain out of the 3 PM sugar dip.",
     },
   ];
 
@@ -1002,105 +1086,47 @@ function CustomerStories() {
     <section className="py-20 md:py-28">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <div className="label-eyebrow">Real stories</div>
-          <h2 className="h-display text-3xl md:text-5xl">
-            Three customers.
+          <div className="label-eyebrow">Inside a HUSH capsule</div>
+          <h2 className="h-display text-3xl md:text-5xl leading-tight">
+            What we put in.
             <br />
-            <span className="italic text-rosegold">Three quieter kitchens.</span>
+            <span className="italic text-rosegold">And what we leave out.</span>
           </h2>
+          <p className="text-lg text-ink-soft pt-2 max-w-xl mx-auto">
+            Three plant-derived aromatic blends. Hand-finished in California.
+            Zero synthetic perfumes, zero parabens, zero "proprietary"
+            chemicals you can't pronounce.
+          </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {stories.map((s, i) => (
+
+        <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+          {compounds.map((c, i) => (
             <article
               key={i}
-              className="bg-cream-50 rounded-3xl p-7 border border-cream-200/60 space-y-4"
+              className="bg-cream-100 rounded-3xl p-7 border border-cream-200/60 space-y-3"
             >
-              <Stars />
-              <h3 className="font-display text-xl text-ink leading-snug">
-                "{s.headline}"
-              </h3>
-              <p className="text-ink-soft text-sm leading-relaxed">{s.body}</p>
-              <div className="text-xs pt-3 border-t border-cream-200/80">
-                <span className="font-medium text-ink">{s.name}</span> · {s.loc}
+              <div className="text-xs uppercase tracking-widest text-rosegold font-medium">
+                Blend {i + 1}
               </div>
+              <h3 className="font-display text-2xl text-ink leading-tight">
+                {c.name}
+              </h3>
+              <p className="text-ink-soft text-sm leading-relaxed">{c.desc}</p>
             </article>
           ))}
         </div>
+
+        <p className="text-[11px] text-ink-soft/70 text-center mt-8 max-w-2xl mx-auto">
+          Trade-marked names refer to AromaFit's proprietary aromatic blends and
+          are not pharmacological actives.
+        </p>
       </div>
     </section>
   );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 11. THE 3 SCENTS
-// ─────────────────────────────────────────────────────────────────────────────
-function ScentsDeepDive({ onCta }) {
-  return (
-    <section className="py-20 md:py-28 bg-cream-100">
-      <div className="container-x">
-        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-          <div className="label-eyebrow">The HUSH Collection</div>
-          <h2 className="h-display text-3xl md:text-5xl">
-            Three scents.
-            <br />
-            <span className="italic text-rosegold">One promise.</span>
-          </h2>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-14">
-          <div className="rounded-[2.5rem] overflow-hidden bg-cream-200">
-            <SmartImage
-              src={IMAGES.packagingTrio}
-              alt="HUSH Mint, Citrus, Spice packaging"
-              label="Packaging trio"
-              className="w-full h-auto"
-              imgClassName="object-contain w-full h-auto"
-            />
-          </div>
-          <div className="space-y-4">
-            <p className="text-lg text-ink-soft leading-relaxed">
-              Each HUSH capsule is hand-blended with plant-derived aromatic
-              oils. Same diffuser. Same ritual. Three different moods — pick
-              the one that fits your evening.
-            </p>
-            <ul className="space-y-4 pt-2">
-              {SCENTS.map((s) => (
-                <li
-                  key={s.id}
-                  className="flex gap-4 items-start bg-cream-50 rounded-2xl p-4 border border-cream-200/70"
-                >
-                  <span
-                    className="h-9 w-9 rounded-full flex-shrink-0 mt-1"
-                    style={{ background: s.color }}
-                  />
-                  <div>
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-display text-xl text-ink">
-                        HUSH {s.name}
-                      </span>
-                      <span className="text-[10px] uppercase tracking-widest text-rosegold">
-                        {s.notes}
-                      </span>
-                    </div>
-                    <p className="text-sm text-ink-soft mt-1">{s.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <div className="pt-3">
-              <button onClick={onCta} className="btn-outline">
-                Try all three with the Discovery Pack
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// 12. WHAT'S IN THE BOX — needs new image
+// 13. WHAT'S IN THE BOX
 // ─────────────────────────────────────────────────────────────────────────────
 function WhatsInBox() {
   const items = [
@@ -1108,14 +1134,14 @@ function WhatsInBox() {
     { icon: <Sparkles size={18} />, label: "Your selected HUSH capsule(s)" },
     { icon: <Zap size={18} />, label: "Braided USB-C cable (1.5 m)" },
     { icon: <Coffee size={18} />, label: "USB-C wall adapter" },
-    { icon: <Heart size={18} />, label: "Quick-start ritual card" },
-    { icon: <Shield size={18} />, label: "30-day quiet guarantee insert" },
+    { icon: <Sparkles size={18} />, label: "Quick-start ritual card" },
+    { icon: <Shield size={18} />, label: "30-day refund insert" },
   ];
 
   return (
-    <section className="py-20 md:py-28">
+    <section className="py-20 md:py-28 bg-cream-100">
       <div className="container-x grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-        <div className="aspect-[4/3] rounded-[2.5rem] overflow-hidden bg-cream-100 flex items-center justify-center">
+        <div className="aspect-[4/3] rounded-[2.5rem] overflow-hidden bg-cream-50 flex items-center justify-center">
           <SmartImage
             src={IMAGES.whatsInBox}
             alt="What's in the box — flat lay"
@@ -1128,20 +1154,19 @@ function WhatsInBox() {
         <div className="space-y-6">
           <div className="label-eyebrow">What's in the box</div>
           <h2 className="h-display text-3xl md:text-5xl leading-tight">
-            Everything to start
+            Open the box.
             <br />
-            <span className="italic text-rosegold">tonight.</span>
+            <span className="italic text-rosegold">Be in your first session in 90 seconds.</span>
           </h2>
           <p className="text-lg text-ink-soft leading-relaxed">
-            HUSH ships ready-to-go. Open the box, plug it in, drop your
-            capsule. Most customers are in their first ritual within 90
-            seconds of opening.
+            Plug in the USB-C cable. Drop a capsule. Press once. The whole
+            unboxing-to-first-ritual takes less time than reading this section.
           </p>
           <ul className="grid sm:grid-cols-2 gap-3 pt-2">
             {items.map((it, i) => (
               <li
                 key={i}
-                className="flex gap-3 items-center bg-cream-100 rounded-2xl p-3.5 border border-cream-200/70"
+                className="flex gap-3 items-center bg-cream-50 rounded-2xl p-3.5 border border-cream-200/70"
               >
                 <span className="text-rosegold flex-shrink-0">{it.icon}</span>
                 <span className="text-sm text-ink">{it.label}</span>
@@ -1155,7 +1180,7 @@ function WhatsInBox() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 13. SPECS BLOCK
+// 14. SPECS
 // ─────────────────────────────────────────────────────────────────────────────
 function SpecsBlock() {
   const specs = [
@@ -1164,11 +1189,11 @@ function SpecsBlock() {
     { icon: <Battery size={20} />, label: "Power", value: "USB-C, 5 V" },
     { icon: <Volume2 size={20} />, label: "Sound", value: "Whisper-silent" },
     { icon: <Clock size={20} />, label: "Session", value: "25 min auto-off" },
-    { icon: <RefreshCw size={20} />, label: "Capsule life", value: "~30 sessions" },
+    { icon: <RefreshCw size={20} />, label: "Capsule life", value: "30 sessions" },
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-cream-100">
+    <section className="py-20 md:py-28">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
           <div className="label-eyebrow">Specs & details</div>
@@ -1181,7 +1206,7 @@ function SpecsBlock() {
           {specs.map((s, i) => (
             <div
               key={i}
-              className="bg-cream-50 rounded-2xl p-5 border border-cream-200/60 space-y-2"
+              className="bg-cream-100 rounded-2xl p-5 border border-cream-200/60 space-y-2"
             >
               <div className="text-rosegold">{s.icon}</div>
               <div className="text-[10px] uppercase tracking-widest text-ink-soft">
@@ -1199,53 +1224,53 @@ function SpecsBlock() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 14. SCIENCE
+// 15. SCIENCE
 // ─────────────────────────────────────────────────────────────────────────────
 function QuietScience() {
-  const pillars = [
-    {
-      title: "Aroma & the senses",
-      body: "The olfactory system has direct connections to brain regions involved in mood and habit. It's why scent has shaped wellness rituals for thousands of years.",
-    },
-    {
-      title: "The peppermint tradition",
-      body: "Peppermint is the most-studied aromatic profile in the appetite-and-cravings literature. Bryan Raudenbush's 2008 study at Wheeling Jesuit University reported reduced snacking behavior in participants who inhaled peppermint at regular intervals.",
-    },
-    {
-      title: "Mindful, not medical",
-      body: "HUSH is a wellness device. Not a drug, not a supplement, not a diet. Built around a simple idea: the right scent at the right moment helps you slow down — and rediscover your own appetite signals.",
-    },
-  ];
-
   return (
     <section id="science" className="py-20 md:py-28 bg-ink text-cream-50">
-      <div className="container-x">
-        <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+      <div className="container-narrow">
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
           <div className="text-xs uppercase tracking-widest text-rosegold-light">
-            The science of quiet
+            "Sounds too good to be true."
           </div>
-          <h2 className="h-display text-3xl md:text-5xl text-cream-50">
-            For the skeptics.
+          <h2 className="h-display text-3xl md:text-5xl text-cream-50 leading-tight">
+            We hear you.
             <br />
-            <span className="italic text-rosegold-light">(We were too.)</span>
+            <span className="italic text-rosegold-light">Here's the science we lean on.</span>
           </h2>
         </div>
-        <div className="grid md:grid-cols-3 gap-10 max-w-5xl mx-auto">
-          {pillars.map((p, i) => (
-            <div key={i} className="space-y-3">
-              <div className="font-display text-5xl text-rosegold-light leading-none">
-                0{i + 1}
-              </div>
-              <h3 className="font-display text-2xl text-cream-50">{p.title}</h3>
-              <p className="text-cream-100/70 leading-relaxed text-sm">{p.body}</p>
-            </div>
-          ))}
+
+        <div className="space-y-7 text-cream-100/80 leading-relaxed text-base md:text-lg">
+          <p>
+            <strong className="text-cream-50">Aroma is not a placebo.</strong> The
+            olfactory system is one of the few sensory pathways with direct
+            connections to the brain regions involved in mood, behavior and
+            appetite signaling. That's why scent has been at the center of
+            wellness rituals for thousands of years.
+          </p>
+          <p>
+            <strong className="text-cream-50">Peppermint specifically</strong> is
+            the most-studied aromatic profile in the appetite-and-cravings
+            literature. Bryan Raudenbush's 2008 study at Wheeling Jesuit
+            University, for example, reported reduced snacking behavior in
+            participants exposed to peppermint aroma at regular intervals.
+          </p>
+          <p>
+            <strong className="text-cream-50">We don't claim HUSH cures
+            anything.</strong> What we claim is simpler: a beautifully made
+            device, a thoughtfully blended aromatic, and a ritual that takes 25
+            minutes. The 12,000+ customers using it daily — many of whom share
+            their experiences in the reviews above — speak for themselves.
+          </p>
         </div>
-        <p className="text-xs text-cream-100/40 mt-14 max-w-3xl mx-auto text-center leading-relaxed">
+
+        <p className="text-xs text-cream-100/40 mt-12 text-center leading-relaxed">
           AromaFit is a wellness brand. HUSH is not a medical device, drug, or
           weight-loss product. References to scientific literature are for
-          context only and are not claims about the product's effects.
-          Individual experiences may vary.
+          context only and are not claims about the product's effects on
+          weight, metabolism or any medical condition. Individual experiences
+          vary.
         </p>
       </div>
     </section>
@@ -1253,7 +1278,7 @@ function QuietScience() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 15. FOUNDER'S NOTE — needs new image
+// 16. FOUNDER'S NOTE
 // ─────────────────────────────────────────────────────────────────────────────
 function FoundersNote() {
   return (
@@ -1273,25 +1298,27 @@ function FoundersNote() {
         <div className="md:col-span-3 space-y-6">
           <div className="label-eyebrow">A note from the founder</div>
           <h2 className="h-display text-3xl md:text-5xl leading-tight">
-            "I built HUSH for
+            "I built HUSH after the
             <br />
-            <span className="italic text-rosegold">the 9 PM version of me."</span>
+            <span className="italic text-rosegold">15th diet I quit in a month."</span>
           </h2>
           <div className="space-y-4 text-ink-soft text-base md:text-lg leading-relaxed">
             <p>
-              I'd tried every diet, every app, every supplement. The one thing
-              I couldn't quiet was the late-night kitchen walk — the one I
-              promised myself I wouldn't take, every single morning.
+              Every diet I tried lost the war against the same five-minute
+              window: the 9 PM walk to the kitchen. Every supplement promised
+              what it couldn't deliver. Every app gamified my hunger and then
+              quietly added it back.
             </p>
             <p>
-              HUSH started as a personal ritual: a small device, a single
-              capsule, twenty-five minutes of quiet. By the time my friends
-              started asking for one, I knew it had to exist for everyone.
+              HUSH started as a personal experiment — a small device, a
+              hand-blended aromatic, twenty-five minutes of pause. By the time
+              my friends started messaging me asking what I was using, I knew
+              it had to exist for everyone.
             </p>
             <p>
-              We don't promise miracles. We promise a beautifully made object
-              and a simple ritual that fits into your evenings — not against
-              them.
+              We're not selling miracles. We're selling a beautifully made
+              object and a ritual that fits the moments diets pretend don't
+              exist.
             </p>
           </div>
           <div className="pt-2 flex items-center gap-3">
@@ -1304,7 +1331,7 @@ function FoundersNote() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 16. GUARANTEE
+// 17. GUARANTEE
 // ─────────────────────────────────────────────────────────────────────────────
 function GuaranteeBlock() {
   return (
@@ -1314,7 +1341,7 @@ function GuaranteeBlock() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cream-100 border border-cream-200">
             <Shield size={28} className="text-rosegold" />
           </div>
-          <div className="label-eyebrow">The 30-day quiet guarantee</div>
+          <div className="label-eyebrow">The 30-day "keep it" guarantee</div>
           <h2 className="h-display text-3xl md:text-5xl leading-tight">
             Try HUSH for 30 days.
             <br />
@@ -1323,12 +1350,14 @@ function GuaranteeBlock() {
             </span>
           </h2>
           <p className="text-lg text-ink-soft max-w-2xl mx-auto leading-relaxed">
-            We're so sure HUSH will become part of your evenings that we don't
+            We're so sure HUSH will become part of your day that we don't even
             want it back if it doesn't. After 30 days, just email us. We refund
-            100% — no return shipment, no paperwork, no questions.
+            100%. No return, no paperwork, no questions, no upsell call. The
+            box is yours, the diffuser is yours, the half-used capsule is
+            yours.
           </p>
           <p className="text-xs text-ink-soft pt-2">
-            Will some people abuse it? Probably. Worth it.
+            Will some people abuse it? Yes. We've done the math. It's worth it.
           </p>
         </div>
       </div>
@@ -1337,7 +1366,7 @@ function GuaranteeBlock() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 17. BUILD YOUR HUSH
+// 18. BUILD YOUR HUSH
 // ─────────────────────────────────────────────────────────────────────────────
 function BuildYourHush({
   scent,
@@ -1365,6 +1394,10 @@ function BuildYourHush({
             <br />
             <span className="italic text-rosegold">Start tonight.</span>
           </h2>
+          <p className="text-lg text-ink-soft pt-2">
+            Most customers go for the Discovery Pack — three months of evening
+            rituals, or six weeks at twice a day.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
@@ -1395,6 +1428,13 @@ function BuildYourHush({
                   }`}
                 >
                   {b.desc}
+                </p>
+                <p
+                  className={`text-xs ${
+                    b.popular ? "text-rosegold-light" : "text-rosegold"
+                  }`}
+                >
+                  Lasts {b.days}
                 </p>
               </div>
               <div className="flex items-baseline gap-3 mb-1">
@@ -1498,7 +1538,7 @@ function BuildYourHush({
             <ArrowRight size={18} />
           </button>
           <p className="text-xs text-center text-ink-soft mt-3">
-            Free US shipping · 30-day quiet guarantee · Ships in 1–2 days
+            Free US shipping · 30-day refund (keep it) · Ships in 1–2 days
           </p>
         </div>
       </div>
@@ -1507,45 +1547,45 @@ function BuildYourHush({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 18. PRODUCT FAQ
+// 19. PRODUCT FAQ
 // ─────────────────────────────────────────────────────────────────────────────
 function ProductFAQ() {
   const faqs = [
     {
-      q: "What exactly does HUSH do?",
-      a: "HUSH is a capsule-based aromatherapy diffuser. You insert a HUSH capsule, press once, and the device gently diffuses our hand-blended aromatic oils for 25 minutes. It's designed to support a calmer environment around food.",
+      q: "How long does a single capsule last?",
+      a: "Each HUSH capsule is rated for 30 sessions of 25 minutes each. If you use it once a day (e.g. evening only) one capsule lasts ~30 days. Twice a day (afternoon + evening) → ~15 days. Three times a day (morning + afternoon + evening) → ~10 days. The Discovery Pack (3 capsules) covers most users for 1.5 to 3 months.",
     },
     {
-      q: "Is HUSH a weight-loss product or supplement?",
-      a: "No. HUSH is a wellness device, not a medical product. We make no medical or weight-loss claims. Many of our customers tell us it helped them slow down around food, but the device itself is simply a beautifully made aromatherapy tool.",
+      q: "When during the day should I use HUSH?",
+      a: "Whenever the cravings hit — morning, afternoon, or evening. Most customers start with one daily session after dinner (the famous 9 PM kitchen walk) and then add a second afternoon session if they want to control the 3 PM sugar crash too.",
     },
     {
-      q: "How does the subscription work?",
-      a: "When you subscribe, you save 20% on your first order and receive your chosen capsule (or rotation of capsules) every month. You can pause, change scent, or cancel at any time from your account — no calls, no friction.",
+      q: "Will I really lose weight?",
+      a: "HUSH is a wellness aromatherapy device, not a weight-loss product. We don't make medical claims. What we will say is that thousands of customers tell us their cravings dropped, their snacking decreased, and many of them noticed they fit into clothes they hadn't worn in a while. Read the reviews — these are personal experiences, not product claims. And if it doesn't work for you, you keep the device and we refund you anyway.",
     },
     {
-      q: "How long does a capsule last?",
-      a: "Each HUSH capsule is designed for ~30 sessions of 25 minutes — about a month of daily evening rituals.",
+      q: "Is it just a placebo?",
+      a: 'When 12,000+ customers report the same effect, "placebo" stops being the simple answer. What we know: aromatic compounds — peppermint in particular — have been studied for decades for their effect on appetite signaling. Whether HUSH works because of the aromatics, the ritual, or both, the customer experience is consistent. The 30-day refund policy means you don\'t have to take our word for it.',
+    },
+    {
+      q: "How does Subscribe & Save work?",
+      a: "Subscribe & Save 20% gives you 20% off your first order and ships fresh capsules every 30 days. Pause, change scent, or cancel anytime from your account — no calls, no friction.",
     },
     {
       q: "Which scent should I start with?",
       a: "Most first-time customers go for the Discovery Pack to try all three. If you must pick one, Mint is our flagship and the most universally loved.",
     },
     {
-      q: "Does it actually work?",
-      a: "Our customers report a calmer relationship with food after using HUSH as part of their evening. We don't promise miracles — we promise a beautiful daily ritual that fits the moments most people struggle with. And our 30-day quiet guarantee means you only keep it if you love it.",
+      q: "Is it safe with kids and pets in the room?",
+      a: "Yes. HUSH uses hand-blended, plant-derived aromatic oils intended for typical household use. As with any aromatic product, we recommend ventilation and stopping use if anyone reports discomfort. Keep in mind that HUSH may also reduce appetite in others sharing the room — we recommend running it in a room where this is intentional.",
     },
     {
       q: "What's the return policy?",
-      a: "Our 30-day quiet guarantee: full refund within 30 days of receiving HUSH, no return required, no questions asked.",
+      a: "Our 30-day refund: full refund within 30 days of receiving HUSH. You keep the device. You keep the half-used capsule. No return shipment required. No paperwork. No questions.",
     },
     {
       q: "Where do you ship?",
-      a: "We currently ship across the United States. Orders over $75 ship free.",
-    },
-    {
-      q: "Is it safe with kids and pets in the room?",
-      a: "Yes. HUSH uses hand-blended, plant-derived aromatic oils intended for typical household use. As with any aromatic product, we recommend ventilation and stopping use if anyone reports discomfort.",
+      a: "We currently ship across the United States. Orders over $75 ship free. International is rolling out in the coming months.",
     },
   ];
 
@@ -1555,7 +1595,7 @@ function ProductFAQ() {
     <section id="faq" className="py-20 md:py-28">
       <div className="container-narrow">
         <div className="text-center mb-12 space-y-3">
-          <div className="label-eyebrow">Questions, calmly answered</div>
+          <div className="label-eyebrow">Questions, answered straight</div>
           <h2 className="h-display text-3xl md:text-5xl">FAQ</h2>
         </div>
         <div>
@@ -1586,7 +1626,7 @@ function ProductFAQ() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 19. FINAL CTA
+// 20. FINAL CTA
 // ─────────────────────────────────────────────────────────────────────────────
 function FinalCTA({ onCta }) {
   return (
@@ -1599,15 +1639,17 @@ function FinalCTA({ onCta }) {
         }}
       />
       <div className="container-narrow text-center space-y-7">
-        <div className="label-eyebrow">Tonight</div>
-        <h2 className="h-display text-4xl md:text-7xl leading-[1.05]">
-          Tonight,
+        <div className="label-eyebrow">One more thing</div>
+        <h2 className="h-display text-4xl md:text-7xl leading-[1.02]">
+          Press once.
           <br />
-          <span className="italic text-rosegold">make it quiet.</span>
+          Breathe.
+          <br />
+          <span className="italic text-rosegold">Watch your appetite quietly disappear.</span>
         </h2>
         <p className="text-lg md:text-xl text-ink-soft max-w-xl mx-auto leading-relaxed">
-          Some people diet. Others count. You can also just light HUSH and see
-          what your evenings feel like with a little less noise.
+          12,000 Americans have already done it. The Discovery Pack lasts up to
+          three months. The risk is zero — you keep the device either way.
         </p>
         <div className="pt-2">
           <button onClick={onCta} className="btn-primary text-base !py-5 !px-10">
@@ -1615,7 +1657,7 @@ function FinalCTA({ onCta }) {
           </button>
         </div>
         <p className="text-xs text-ink-soft">
-          Backed by our 30-day quiet guarantee. Free US shipping over $75.
+          Free US shipping · 30-day refund (keep the device)
         </p>
       </div>
     </section>
