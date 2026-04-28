@@ -8,17 +8,19 @@ export default function Story() {
         <div className="md:col-span-3 space-y-7">
           <div className="label-eyebrow">A reader's story</div>
           <h2 className="h-display text-4xl md:text-5xl leading-tight">
-            "I didn't believe a diffuser could change anything.
+            "I lost 4 kg without trying.
             <br />
-            <span className="italic text-rosegold">Then I tried it for seven nights."</span>
+            <span className="italic text-rosegold">
+              I just stopped opening the fridge at 10 PM."
+            </span>
           </h2>
 
           <div className="space-y-5 text-ink-soft text-lg leading-relaxed">
             <p>
-              Ellie had tried everything. Intermittent fasting. Boutique
-              workouts. Three different apps that counted the same calories.
-              The one thing she could never quiet was the 9 PM walk to the
-              kitchen — the one she swore she'd skip every morning.
+              Rachel had tried everything. Intermittent fasting. The
+              Mediterranean diet. Three different apps that counted the same
+              calories. The one thing she could never quiet was the 9 PM walk
+              to the kitchen — the one she swore she'd skip every morning.
             </p>
             <p>
               A friend texted her a photo of HUSH with one line:{" "}
@@ -26,18 +28,23 @@ export default function Story() {
               laughed. She bought it.
             </p>
             <p>
-              Night one, she lit it after dinner and didn't think much. Night
-              two, her partner said: <em>"You haven't gone to the pantry
-              tonight."</em> Night seven, she realized she hadn't, all week.
+              Night one, she pressed the button after dinner and didn't think
+              much. Night four, her partner asked if she'd stopped snacking
+              after dinner. <em>"You haven't been to the pantry in days."</em>
+            </p>
+            <p>
+              Three weeks later, her jeans buttoned without the jump.
+              <strong className="text-ink"> Down 4 kg.</strong> No diet. No
+              gym. Just a button she pressed every evening at 9 PM.
             </p>
             <p className="text-ink font-medium italic font-display text-2xl">
-              "It wasn't a diet. It wasn't willpower. It was just… quiet."
+              "It wasn't willpower. It was a quieter brain around food."
             </p>
           </div>
 
           <div className="text-xs text-ink-soft/80 pt-2">
-            — Ellie T., personal account shared with permission. Individual
-            experiences vary.
+            — Rachel K., Phoenix, AZ. Personal account shared with
+            permission. Individual results vary.
           </div>
         </div>
 

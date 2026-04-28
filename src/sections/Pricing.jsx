@@ -4,43 +4,46 @@ import { Check } from "lucide-react";
 const plans = [
   {
     name: "Starter",
-    price: "$89",
-    crossed: "$109",
-    desc: "The HUSH diffuser with one capsule of your choice.",
+    price: "$69",
+    crossed: "$89",
+    desc: "Diffuser + 1 capsule of your choice.",
+    days: "Lasts ~15-30 days",
     features: [
       "AromaFit HUSH diffuser",
-      "1 capsule (your scent)",
+      "1 capsule (Mint, Citrus, or Spice)",
       "USB-C cable & adapter",
-      "30-day quiet guarantee",
+      "30-day refund — keep the device",
     ],
     cta: "Get HUSH",
     popular: false,
   },
   {
     name: "Discovery",
-    price: "$129",
-    crossed: "$167",
-    desc: "The diffuser plus all three signature scents.",
+    price: "$109",
+    crossed: "$147",
+    desc: "Diffuser + 3 capsules. Mix scents however you want.",
+    days: "Lasts ~45-90 days",
     features: [
       "AromaFit HUSH diffuser",
-      "3 capsules — Mint, Citrus, Spice",
+      "3 capsules — pick any combination of scents",
       "HUSH Discovery box",
-      "30-day quiet guarantee",
+      "30-day refund — keep the device",
       "Free US shipping",
     ],
-    cta: "Get the Discovery Pack",
+    cta: "Build my Discovery Pack",
     popular: true,
   },
   {
     name: "Ritual",
-    price: "$169",
-    crossed: "$229",
-    desc: "Built for daily ritualists. Six capsules to last for months.",
+    price: "$149",
+    crossed: "$209",
+    desc: "Diffuser + 6 capsules for daily ritualists.",
+    days: "Lasts ~90-180 days",
     features: [
       "AromaFit HUSH diffuser",
-      "6 capsules (mix & match)",
+      "6 capsules (mix & match scents)",
       "Wellness journal (printed)",
-      "30-day quiet guarantee",
+      "30-day refund — keep the device",
       "Free US shipping & priority care",
     ],
     cta: "Build my Ritual",
@@ -55,8 +58,12 @@ export default function Pricing() {
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <div className="label-eyebrow">Choose your bundle</div>
           <h2 className="h-display text-4xl md:text-5xl">
-            One device. <span className="italic text-rosegold">Lasting change.</span>
+            One device.{" "}
+            <span className="italic text-rosegold">Less appetite.</span>
           </h2>
+          <p className="text-lg text-ink-soft pt-2">
+            Already own a HUSH? You can buy refills only on the product page.
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -77,14 +84,29 @@ export default function Pricing() {
 
               <div className="space-y-2 mb-6">
                 <h3 className="font-display text-3xl">{p.name}</h3>
-                <p className={`text-sm ${p.popular ? "text-cream-100/70" : "text-ink-soft"}`}>
+                <p
+                  className={`text-sm ${
+                    p.popular ? "text-cream-100/70" : "text-ink-soft"
+                  }`}
+                >
                   {p.desc}
+                </p>
+                <p
+                  className={`text-xs ${
+                    p.popular ? "text-rosegold-light" : "text-rosegold"
+                  }`}
+                >
+                  {p.days}
                 </p>
               </div>
 
               <div className="flex items-baseline gap-3 mb-8">
                 <span className="font-display text-5xl">{p.price}</span>
-                <span className={`text-sm line-through ${p.popular ? "text-cream-100/40" : "text-ink-soft/50"}`}>
+                <span
+                  className={`text-sm line-through ${
+                    p.popular ? "text-cream-100/40" : "text-ink-soft/50"
+                  }`}
+                >
                   {p.crossed}
                 </span>
               </div>
@@ -94,9 +116,13 @@ export default function Pricing() {
                   <li key={i} className="flex gap-3 items-start text-sm">
                     <Check
                       size={16}
-                      className={`mt-0.5 ${p.popular ? "text-rosegold-light" : "text-rosegold"}`}
+                      className={`mt-0.5 ${
+                        p.popular ? "text-rosegold-light" : "text-rosegold"
+                      }`}
                     />
-                    <span className={p.popular ? "text-cream-100/90" : "text-ink-soft"}>
+                    <span
+                      className={p.popular ? "text-cream-100/90" : "text-ink-soft"}
+                    >
                       {f}
                     </span>
                   </li>

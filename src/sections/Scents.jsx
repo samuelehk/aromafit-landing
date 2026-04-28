@@ -9,15 +9,15 @@ const scents = [
     notes: "Peppermint · Eucalyptus",
     moment: "Morning to afternoon",
     description:
-      "Bright, cool, and unmistakably clean. Our most studied profile — built around peppermint, the aroma traditionally linked with feelings of mental clarity.",
+      "The strongest craving-killer in the lineup. Built around peppermint — the most-studied aromatic profile in the appetite-and-cravings literature. Our flagship.",
   },
   {
     name: "Citrus",
     color: "#E8D69A",
     notes: "White grapefruit · Bergamot · Lemon",
-    moment: "Midday reset",
+    moment: "The 3 PM sugar crash",
     description:
-      "Crisp and luminous. The kind of scent that makes a room feel ten degrees lighter — perfect for the in-between hours.",
+      "Crisp and luminous. Built on grapefruit aroma, studied at Osaka University for its effect on satiety regulation. Designed for the in-between hours.",
   },
   {
     name: "Spice",
@@ -25,7 +25,7 @@ const scents = [
     notes: "Cinnamon · Cold vanilla · Cardamom",
     moment: "After dinner & evening",
     description:
-      "Warm, dessert-like, deeply calming. The closer-of-the-day scent — designed for the moments most of us call 'the witching hour' in the kitchen.",
+      "Warm, dessert-like, deeply calming. The dessert-killer — built around vanilla, the aroma documented to drop sweet cravings in clinical settings.",
   },
 ];
 
@@ -38,10 +38,11 @@ export default function Scents() {
           <h2 className="h-display text-4xl md:text-5xl">
             Three scents.
             <br />
-            <span className="italic text-rosegold">One promise.</span>
+            <span className="italic text-rosegold">One job: less appetite.</span>
           </h2>
           <p className="text-lg text-ink-soft pt-2">
-            Choose your favorite. Or get all three with the Discovery Pack.
+            Pick one. Mix all three. Same diffuser, three aromatic profiles —
+            each built on its own published research.
           </p>
         </div>
 
@@ -73,36 +74,37 @@ export default function Scents() {
               </p>
 
               <div className="text-xs text-ink-soft pt-2 border-t border-cream-200/80">
-                Best for: <span className="text-ink font-medium">{s.moment}</span>
+                Best for:{" "}
+                <span className="text-ink font-medium">{s.moment}</span>
               </div>
             </article>
           ))}
         </div>
 
         <div className="mt-16 grid md:grid-cols-2 gap-12 items-center">
-          <div className="aspect-[4/3] rounded-[2.5rem] overflow-hidden bg-cream-200">
+          <div className="rounded-[2.5rem] overflow-hidden bg-cream-200">
             <SmartImage
               src={IMAGES.discoveryPack}
               alt="HUSH Discovery Pack with three scents"
               label="HUSH Discovery Pack"
-              className="w-full h-full"
-              imgClassName="object-cover w-full h-full"
+              className="w-full h-auto"
+              imgClassName="object-contain w-full h-auto"
             />
           </div>
           <div className="space-y-5">
-            <div className="label-eyebrow">Discovery Pack</div>
+            <div className="label-eyebrow">Discovery Pack · $109</div>
             <h3 className="h-display text-3xl md:text-4xl">
-              Try all three scents.
+              Pick three scents.
               <br />
-              <span className="italic text-rosegold">Find your quiet.</span>
+              <span className="italic text-rosegold">Mix them how you want.</span>
             </h3>
             <p className="text-ink-soft text-lg">
-              The Discovery Pack pairs Mint, Citrus, and Spice in a single
-              gift-ready box. The easiest way to discover the scent that
-              becomes your evening ritual.
+              The Discovery Pack covers ~3 months of evening rituals — or 6
+              weeks if you also use HUSH after lunch. Choose any combination
+              of Mint, Citrus and Spice.
             </p>
             <Link to="/hush" className="btn-primary">
-              Get the Discovery Pack
+              Build my Discovery Pack
             </Link>
           </div>
         </div>

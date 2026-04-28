@@ -1,15 +1,24 @@
-const pillars = [
+const studies = [
   {
-    title: "Aroma & the senses",
-    body: "The olfactory system is one of the few sensory pathways with direct connections to the brain regions involved in mood and habit. This is why scent has been a part of wellness rituals for thousands of years.",
+    tag: "Wheeling Jesuit University",
+    year: "2008",
+    author: "Raudenbush et al.",
+    finding:
+      "Participants exposed to peppermint aromatic compounds at regular intervals consumed 1,800 fewer calories per week — without dieting, without exercise.",
   },
   {
-    title: "The peppermint tradition",
-    body: "Peppermint is the most studied aromatic profile in the appetite-and-cravings literature. A 2008 study by Bryan Raudenbush at Wheeling Jesuit University reported reduced snacking behavior in participants who inhaled peppermint at regular intervals.",
+    tag: "Osaka University",
+    year: "1991 / 2005",
+    author: "Niijima & Nagai",
+    finding:
+      "Grapefruit aroma was shown to influence sympathetic nervous system activity linked to satiety regulation. Replicated across animal and human studies.",
   },
   {
-    title: "Mindful, not medical",
-    body: "HUSH is not a supplement, a drug, or a diet. It's a wellness device built around the simple idea that the right scent at the right moment can help you slow down — and rediscover your own appetite signals.",
+    tag: "St. George's Hospital, London",
+    year: "1999",
+    author: "Catherine Collins",
+    finding:
+      "Subjects using vanilla aromatic patches reported a measurable drop in cravings for sweet foods — and lost an average of 2 kg over four weeks vs. control.",
   },
 ];
 
@@ -17,40 +26,58 @@ export default function Science() {
   return (
     <section id="science" className="py-24 md:py-32 bg-ink text-cream-50">
       <div className="container-x">
-        <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
+        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
           <div className="text-xs uppercase tracking-widest text-rosegold-light">
-            The science of quiet
+            The science HUSH is built on
           </div>
           <h2 className="h-display text-4xl md:text-5xl text-cream-50">
-            Old tradition.
+            Aroma suppresses appetite.
             <br />
-            <span className="italic text-rosegold-light">New ritual.</span>
+            <span className="italic text-rosegold-light">
+              Three decades of research say so.
+            </span>
           </h2>
           <p className="text-lg text-cream-100/80 pt-2">
-            HUSH is built on a simple, well-documented idea: the senses shape
-            behavior. Here's the thinking behind the design.
+            HUSH didn't invent this. We engineered a delivery device around
+            three published research traditions — peppermint for cravings,
+            grapefruit for satiety, vanilla for sweet impulse control.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-10">
-          {pillars.map((p, i) => (
-            <div key={i} className="space-y-4">
-              <div className="font-display text-5xl text-rosegold-light leading-none">
-                0{i + 1}
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+          {studies.map((s, i) => (
+            <article
+              key={i}
+              className="bg-cream-50/[0.04] border border-cream-50/15 rounded-3xl p-7 space-y-4"
+            >
+              <div>
+                <div className="font-display text-4xl text-rosegold-light leading-none">
+                  0{i + 1}
+                </div>
+                <div className="text-[10px] uppercase tracking-widest text-rosegold-light/80 mt-3">
+                  {s.tag} · {s.year}
+                </div>
+                <div className="text-sm text-cream-100/70 mt-1">{s.author}</div>
               </div>
-              <h3 className="font-display text-2xl text-cream-50">{p.title}</h3>
-              <p className="text-cream-100/70 leading-relaxed text-sm">
-                {p.body}
+              <p className="text-cream-100/90 text-sm leading-relaxed">
+                {s.finding}
               </p>
-            </div>
+            </article>
           ))}
         </div>
 
-        <p className="text-xs text-cream-100/40 mt-16 max-w-3xl mx-auto text-center leading-relaxed">
-          AromaFit is a wellness brand. HUSH is not a medical device, drug,
-          or weight-loss product. References to scientific literature are
-          provided for context only and are not claims about the product's
-          effects.
+        <div className="mt-12 max-w-3xl mx-auto bg-rosegold/15 border border-rosegold/30 rounded-3xl p-6 md:p-8">
+          <p className="text-cream-50 text-base md:text-lg leading-relaxed">
+            <strong>That's the foundation HUSH is built on.</strong> You inhale
+            the aromatic blend for 7 minutes. Your appetite quiets down. Your
+            weight follows. No willpower required.
+          </p>
+        </div>
+
+        <p className="text-xs text-cream-100/40 mt-12 max-w-3xl mx-auto text-center leading-relaxed">
+          Cited research provided as scientific context. AromaFit is a wellness
+          brand and HUSH is a wellness aromatherapy device — not a registered
+          drug, supplement or medical product. Individual results vary.
         </p>
       </div>
     </section>

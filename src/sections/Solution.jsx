@@ -1,7 +1,7 @@
 import SmartImage from "../components/SmartImage";
 import { IMAGES } from "../images";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 export default function Solution() {
   return (
@@ -22,29 +22,33 @@ export default function Solution() {
           <h2 className="h-display text-4xl md:text-5xl leading-tight">
             One device.
             <br />
-            <span className="italic text-rosegold">Lasting change.</span>
+            <span className="italic text-rosegold">
+              Less appetite. Less weight.
+            </span>
           </h2>
           <p className="text-lg text-ink-soft leading-relaxed">
-            HUSH is the first capsule-based aromatherapy diffuser designed
-            around a single ritual: a quieter mind around food.
+            HUSH is a capsule-based aromatherapy diffuser engineered around
+            three decades of olfactory research. You press once. Within 7
+            minutes, your craving for snacks fades. Less appetite means
+            fewer calories. Fewer calories means weight loss.
           </p>
 
-          <ul className="space-y-4 pt-2">
+          <ul className="space-y-3 pt-2">
             {[
-              "Plug in. Insert a HUSH capsule. Press once.",
-              "Three signature scents — Mint, Citrus, Spice.",
-              "Hand-blended aromatic compounds. No fillers.",
-              "Designed in California. Built to last for years.",
+              "Suppresses appetite in 7 minutes — clinically-studied compounds",
+              "Three plant-derived scents: Mint, Citrus, Spice",
+              "30 sessions per capsule · 25 min auto-off",
+              "Designed in California. Used by 12,000+ Americans.",
             ].map((line, i) => (
-              <li key={i} className="flex gap-4 items-start">
-                <span className="mt-2 h-1.5 w-1.5 rounded-full bg-rosegold flex-shrink-0" />
+              <li key={i} className="flex gap-3 items-start">
+                <Check size={18} className="text-rosegold mt-1 flex-shrink-0" />
                 <span className="text-ink-soft">{line}</span>
               </li>
             ))}
           </ul>
 
-          <Link to="/hush" className="btn-primary mt-4">
-            Discover HUSH <ArrowRight size={16} />
+          <Link to="/hush" className="btn-primary mt-2">
+            Get HUSH — from $69 <ArrowRight size={16} />
           </Link>
         </div>
       </div>

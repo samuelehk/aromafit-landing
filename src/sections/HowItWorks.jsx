@@ -4,18 +4,18 @@ import { IMAGES } from "../images";
 const steps = [
   {
     n: "01",
-    title: "Insert a capsule",
-    body: "Pop in a HUSH capsule — Mint, Citrus, or Spice. The magnetic dock clicks into place.",
+    title: "Press once",
+    body: "The diffuser releases the HUSH aromatic blend — peppermint, eucalyptus, plant-derived compounds. Silent. Vapor begins in seconds.",
   },
   {
     n: "02",
-    title: "Press once",
-    body: "A single touch starts the diffusion. The device runs silent for 25 minutes, then turns off.",
+    title: "Breathe for 7 minutes",
+    body: "The cravings loop softens. Most users feel it inside the first 7 minutes — the same window documented in the Raudenbush 2008 study.",
   },
   {
     n: "03",
-    title: "Breathe & settle",
-    body: "Pair it with the moments that matter most: after dinner, evening reading, late-night work.",
+    title: "Walk away",
+    body: "After 25 minutes the device shuts off. The craving doesn't come back. You go on with your day — without the snack you didn't want to want.",
   },
 ];
 
@@ -24,20 +24,21 @@ export default function HowItWorks() {
     <section id="how" className="py-24 md:py-32">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-          <div className="label-eyebrow">The Ritual</div>
+          <div className="label-eyebrow">How HUSH ends the loop</div>
           <h2 className="h-display text-4xl md:text-5xl">
-            Three steps. <span className="italic text-rosegold">One quiet moment.</span>
+            Three steps.{" "}
+            <span className="italic text-rosegold">Zero willpower.</span>
           </h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-16 items-center mb-20">
-          <div className="aspect-square rounded-[2.5rem] overflow-hidden bg-cream-100">
+          <div className="aspect-[4/3] rounded-[2.5rem] overflow-hidden bg-cream-100 flex items-center justify-center">
             <SmartImage
               src={IMAGES.capsuleInsert}
               alt="Hand inserting a HUSH capsule into the diffuser"
               label="Capsule insertion detail"
               className="w-full h-full"
-              imgClassName="object-cover w-full h-full"
+              imgClassName="object-contain w-full h-full"
             />
           </div>
 

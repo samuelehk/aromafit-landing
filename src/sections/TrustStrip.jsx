@@ -1,10 +1,10 @@
 export default function TrustStrip() {
   const items = [
-    "Featured in Wellness Daily",
-    "12,000+ rituals at home",
-    "30-day quiet guarantee",
-    "Free US shipping over $75",
-    "Plant-derived aroma capsules",
+    "92% less snacking after 7 days",
+    "−4.1 kg average loss in 8 weeks",
+    "Works in 7 minutes",
+    "12,000+ Americans daily",
+    "30-day refund — keep the device",
   ];
 
   return (

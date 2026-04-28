@@ -9,7 +9,6 @@ import {
   Sparkles,
   Clock,
   ArrowRight,
-  RefreshCw,
   Award,
   Zap,
   Sun,
@@ -21,7 +20,7 @@ import {
   AlertTriangle,
   TrendingDown,
   Flame,
-  X,
+  RefreshCw,
 } from "lucide-react";
 import SmartImage from "../components/SmartImage";
 import Stars from "../components/Stars";
@@ -54,38 +53,77 @@ const SCENTS = [
   },
 ];
 
-const BUNDLES = [
+// Bundles WITH device (first-time buyers)
+const STARTER_BUNDLES = [
   {
-    id: "starter",
+    id: "starter-1",
     name: "Starter",
     desc: "Diffuser + 1 capsule",
-    price: 89,
-    crossed: 109,
-    save: "Save 18%",
+    price: 69,
+    crossed: 89,
+    save: "Save 22%",
     perCapsule: "—",
     capsules: 1,
     days: "~15-30 days",
   },
   {
-    id: "discovery",
+    id: "starter-3",
     name: "Discovery",
     desc: "Diffuser + 3 capsules",
-    price: 129,
-    crossed: 167,
-    save: "Save 23%",
-    perCapsule: "$13/capsule",
+    price: 109,
+    crossed: 147,
+    save: "Save 26%",
+    perCapsule: "$16/capsule",
     popular: true,
     capsules: 3,
     days: "~45-90 days",
   },
   {
-    id: "ritual",
+    id: "starter-6",
     name: "Ritual",
     desc: "Diffuser + 6 capsules",
-    price: 169,
-    crossed: 229,
-    save: "Save 26%",
-    perCapsule: "$13/capsule",
+    price: 149,
+    crossed: 209,
+    save: "Save 29%",
+    perCapsule: "$15/capsule",
+    capsules: 6,
+    days: "~90-180 days",
+  },
+];
+
+// Bundles WITHOUT device (refills, for existing customers)
+const REFILL_BUNDLES = [
+  {
+    id: "refill-1",
+    name: "Single",
+    desc: "1 capsule refill",
+    price: 19,
+    crossed: 25,
+    save: "Save 24%",
+    perCapsule: "—",
+    capsules: 1,
+    days: "~15-30 days",
+  },
+  {
+    id: "refill-3",
+    name: "Triple",
+    desc: "3 capsule refills",
+    price: 49,
+    crossed: 75,
+    save: "Save 35%",
+    perCapsule: "$16/capsule",
+    popular: true,
+    capsules: 3,
+    days: "~45-90 days",
+  },
+  {
+    id: "refill-6",
+    name: "Stash",
+    desc: "6 capsule refills",
+    price: 89,
+    crossed: 150,
+    save: "Save 41%",
+    perCapsule: "$15/capsule",
     capsules: 6,
     days: "~90-180 days",
   },
@@ -95,9 +133,32 @@ const BUNDLES = [
 // MAIN PAGE
 // ─────────────────────────────────────────────────────────────────────────────
 export default function Product() {
-  const [scent, setScent] = useState("mint");
-  const [bundle, setBundle] = useState("discovery");
-  const [subscription, setSubscription] = useState(false);
+  const [mode, setMode] = useState("starter"); // 'starter' or 'refill'
+  const [bundleSize, setBundleSize] = useState(3); // 1, 3, or 6
+  const [selectedScents, setSelectedScents] = useState(["mint", "mint", "mint"]);
+
+  // Resize the scent array when bundle size changes
+  useEffect(() => {
+    setSelectedScents((prev) => {
+      const next = [];
+      for (let i = 0; i < bundleSize; i++) {
+        next.push(prev[i] || "mint");
+      }
+      return next;
+    });
+  }, [bundleSize]);
+
+  const setScentAt = (idx, scentId) => {
+    setSelectedScents((prev) => {
+      const next = [...prev];
+      next[idx] = scentId;
+      return next;
+    });
+  };
+
+  const currentBundles = mode === "starter" ? STARTER_BUNDLES : REFILL_BUNDLES;
+  const selectedBundle = currentBundles.find((b) => b.capsules === bundleSize);
+  const finalPrice = selectedBundle.price;
 
   const ctaRef = useRef(null);
   const heroRef = useRef(null);
@@ -105,20 +166,17 @@ export default function Product() {
     ctaRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const selectedBundle = BUNDLES.find((b) => b.id === bundle);
-  const finalPrice = subscription
-    ? Math.round(selectedBundle.price * 0.8)
-    : selectedBundle.price;
-
   return (
     <div className="pt-6 pb-0">
       <ProductHero
-        scent={scent}
-        setScent={setScent}
-        bundle={bundle}
-        setBundle={setBundle}
-        subscription={subscription}
-        setSubscription={setSubscription}
+        mode={mode}
+        setMode={setMode}
+        bundleSize={bundleSize}
+        setBundleSize={setBundleSize}
+        selectedScents={selectedScents}
+        setScentAt={setScentAt}
+        currentBundles={currentBundles}
+        selectedBundle={selectedBundle}
         finalPrice={finalPrice}
         heroRef={heroRef}
       />
@@ -141,12 +199,14 @@ export default function Product() {
       <FoundersNote />
       <GuaranteeBlock />
       <BuildYourHush
-        scent={scent}
-        setScent={setScent}
-        bundle={bundle}
-        setBundle={setBundle}
-        subscription={subscription}
-        setSubscription={setSubscription}
+        mode={mode}
+        setMode={setMode}
+        bundleSize={bundleSize}
+        setBundleSize={setBundleSize}
+        selectedScents={selectedScents}
+        setScentAt={setScentAt}
+        currentBundles={currentBundles}
+        selectedBundle={selectedBundle}
         finalPrice={finalPrice}
         ctaRef={ctaRef}
       />
@@ -156,7 +216,7 @@ export default function Product() {
       <StickyAddToCart
         finalPrice={finalPrice}
         selectedBundle={selectedBundle}
-        scent={scent}
+        selectedScents={selectedScents}
         heroRef={heroRef}
         onCta={scrollToCheckout}
       />
@@ -165,21 +225,65 @@ export default function Product() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// SHARED — ScentChip (used in pickers)
+// ─────────────────────────────────────────────────────────────────────────────
+function CapsuleSlots({ count, selectedScents, setScentAt }) {
+  return (
+    <div className="space-y-2.5">
+      {Array.from({ length: count }).map((_, idx) => {
+        const current = selectedScents[idx] || "mint";
+        return (
+          <div
+            key={idx}
+            className="bg-cream-50 border border-cream-200 rounded-2xl p-3 flex items-center gap-3"
+          >
+            <div className="flex-shrink-0 text-[10px] uppercase tracking-widest text-ink-soft w-16">
+              Capsule {idx + 1}
+            </div>
+            <div className="flex-1 grid grid-cols-3 gap-1.5">
+              {SCENTS.map((s) => {
+                const active = current === s.id;
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => setScentAt(idx, s.id)}
+                    className={`flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-medium transition border ${
+                      active
+                        ? "bg-ink text-cream-50 border-ink"
+                        : "bg-cream-50 text-ink border-cream-200 hover:border-ink/40"
+                    }`}
+                  >
+                    <span
+                      className="h-2 w-2 rounded-full"
+                      style={{ background: s.color }}
+                    />
+                    {s.name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // 1. HERO
 // ─────────────────────────────────────────────────────────────────────────────
 function ProductHero({
-  scent,
-  setScent,
-  bundle,
-  setBundle,
-  subscription,
-  setSubscription,
+  mode,
+  setMode,
+  bundleSize,
+  setBundleSize,
+  selectedScents,
+  setScentAt,
+  currentBundles,
+  selectedBundle,
   finalPrice,
   heroRef,
 }) {
-  const selectedScent = SCENTS.find((s) => s.id === scent);
-  const selectedBundle = BUNDLES.find((b) => b.id === bundle);
-
   const galleryImages = [
     { src: IMAGES.hero, label: "HUSH diffuser" },
     { src: IMAGES.family, label: "Full family" },
@@ -279,51 +383,59 @@ function ProductHero({
           ))}
         </div>
 
-        {/* SCENT PICKER */}
-        <div>
-          <div className="flex items-center justify-between mb-2.5">
-            <label className="text-xs uppercase tracking-widest text-ink font-medium">
-              1. Choose your scent
-            </label>
-            <span className="text-xs text-ink-soft">{selectedScent.notes}</span>
-          </div>
-          <div className="grid grid-cols-3 gap-2.5">
-            {SCENTS.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => setScent(s.id)}
-                className={`rounded-2xl p-3.5 text-left transition border-2 ${
-                  scent === s.id
-                    ? "border-ink bg-cream-100"
-                    : "border-cream-200 bg-cream-50 hover:border-ink/40"
-                }`}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span
-                    className="h-3 w-3 rounded-full"
-                    style={{ background: s.color }}
-                  />
-                  {scent === s.id && <Check size={14} className="text-ink" />}
-                </div>
-                <div className="font-display text-lg leading-tight">{s.name}</div>
-              </button>
-            ))}
-          </div>
-          <p className="text-xs text-ink-soft mt-2.5">{selectedScent.description}</p>
-        </div>
-
-        {/* BUNDLE PICKER */}
+        {/* MODE TOGGLE */}
         <div>
           <label className="text-xs uppercase tracking-widest text-ink font-medium mb-2.5 block">
-            2. Choose your bundle
+            1. What are you buying?
+          </label>
+          <div className="grid grid-cols-2 gap-2.5">
+            <button
+              onClick={() => setMode("starter")}
+              className={`rounded-2xl p-4 text-left transition border-2 ${
+                mode === "starter"
+                  ? "border-ink bg-cream-100"
+                  : "border-cream-200 bg-cream-50 hover:border-ink/40"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-display text-base">Starter Kit</span>
+                {mode === "starter" && <Check size={14} className="text-ink" />}
+              </div>
+              <div className="text-xs text-ink-soft leading-tight">
+                Diffuser + capsules
+              </div>
+            </button>
+            <button
+              onClick={() => setMode("refill")}
+              className={`rounded-2xl p-4 text-left transition border-2 ${
+                mode === "refill"
+                  ? "border-ink bg-cream-100"
+                  : "border-cream-200 bg-cream-50 hover:border-ink/40"
+              }`}
+            >
+              <div className="flex items-center justify-between mb-1">
+                <span className="font-display text-base">Refills only</span>
+                {mode === "refill" && <Check size={14} className="text-ink" />}
+              </div>
+              <div className="text-xs text-ink-soft leading-tight">
+                Already own a HUSH
+              </div>
+            </button>
+          </div>
+        </div>
+
+        {/* BUNDLE SIZE PICKER */}
+        <div>
+          <label className="text-xs uppercase tracking-widest text-ink font-medium mb-2.5 block">
+            2. How many capsules?
           </label>
           <div className="space-y-2.5">
-            {BUNDLES.map((b) => (
+            {currentBundles.map((b) => (
               <button
                 key={b.id}
-                onClick={() => setBundle(b.id)}
+                onClick={() => setBundleSize(b.capsules)}
                 className={`w-full rounded-2xl p-4 text-left transition border-2 flex items-center justify-between ${
-                  bundle === b.id
+                  bundleSize === b.capsules
                     ? "border-ink bg-cream-100"
                     : "border-cream-200 bg-cream-50 hover:border-ink/40"
                 } relative`}
@@ -336,15 +448,19 @@ function ProductHero({
                 <div className="flex items-center gap-3">
                   <span
                     className={`h-5 w-5 rounded-full border-2 flex items-center justify-center transition ${
-                      bundle === b.id ? "border-ink bg-ink" : "border-cream-200"
+                      bundleSize === b.capsules
+                        ? "border-ink bg-ink"
+                        : "border-cream-200"
                     }`}
                   >
-                    {bundle === b.id && (
+                    {bundleSize === b.capsules && (
                       <span className="h-2 w-2 rounded-full bg-cream-50" />
                     )}
                   </span>
                   <div>
-                    <div className="font-display text-xl leading-tight">{b.name}</div>
+                    <div className="font-display text-xl leading-tight">
+                      {b.name}
+                    </div>
                     <div className="text-xs text-ink-soft">
                       {b.desc} · <span className="text-rosegold">{b.days}</span>
                     </div>
@@ -364,50 +480,23 @@ function ProductHero({
           </div>
         </div>
 
-        {/* SUBSCRIPTION TOGGLE */}
+        {/* SCENT PICKER PER CAPSULE */}
         <div>
-          <label className="text-xs uppercase tracking-widest text-ink font-medium mb-2.5 block">
-            3. One-time or subscribe & save
-          </label>
-          <div className="grid grid-cols-2 gap-2.5">
-            <button
-              onClick={() => setSubscription(false)}
-              className={`rounded-2xl p-3.5 text-left transition border-2 ${
-                !subscription
-                  ? "border-ink bg-cream-100"
-                  : "border-cream-200 bg-cream-50 hover:border-ink/40"
-              }`}
-            >
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-display text-lg">One-time</span>
-                {!subscription && <Check size={14} className="text-ink" />}
-              </div>
-              <div className="text-xs text-ink-soft">${selectedBundle.price}</div>
-            </button>
-            <button
-              onClick={() => setSubscription(true)}
-              className={`rounded-2xl p-3.5 text-left transition border-2 relative ${
-                subscription
-                  ? "border-rosegold bg-cream-100"
-                  : "border-cream-200 bg-cream-50 hover:border-rosegold/40"
-              }`}
-            >
-              <span className="absolute -top-2.5 right-3 bg-rosegold text-cream-50 text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded-full">
-                Save 20%
-              </span>
-              <div className="flex items-center justify-between mb-1">
-                <span className="font-display text-lg flex items-center gap-2">
-                  <RefreshCw size={14} className="text-rosegold" /> Subscribe
-                </span>
-                {subscription && <Check size={14} className="text-rosegold" />}
-              </div>
-              <div className="text-xs text-ink-soft">
-                <strong className="text-rosegold">${Math.round(selectedBundle.price * 0.8)}</strong> · Capsule refills monthly
-              </div>
-            </button>
+          <div className="flex items-center justify-between mb-2.5">
+            <label className="text-xs uppercase tracking-widest text-ink font-medium">
+              3. Pick the scent for each capsule
+            </label>
+            <span className="text-xs text-ink-soft">Mix freely</span>
           </div>
-          <p className="text-[11px] text-ink-soft mt-2 leading-relaxed">
-            Cancel, pause, or change scent anytime from your account.
+          <CapsuleSlots
+            count={bundleSize}
+            selectedScents={selectedScents}
+            setScentAt={setScentAt}
+          />
+          <p className="text-[11px] text-ink-soft mt-2.5 leading-relaxed">
+            <strong className="text-ink">Mint</strong> for cravings ·{" "}
+            <strong className="text-ink">Citrus</strong> for the 3 PM crash ·{" "}
+            <strong className="text-ink">Spice</strong> after dinner
           </p>
         </div>
 
@@ -460,16 +549,14 @@ function TwoStarBanner() {
             "Two stars. It works too well. I don't even crave my favorite midnight
             snack anymore. I miss the chaos."
           </h3>
-          <p className="text-ink-soft text-sm">
-            — Giada L., February 2026
-          </p>
+          <p className="text-ink-soft text-sm">— Giada L., February 2026</p>
           <div className="mt-6 pt-5 border-t border-cream-200/80 flex items-start gap-3">
             <span className="text-rosegold flex-shrink-0 mt-0.5">★</span>
             <p className="text-sm text-ink leading-relaxed">
               <strong>Yes, we put a 2-star review on our own product page.</strong>{" "}
-              Because the people who buy HUSH and don't <em>love</em> it tend to share
-              one thing in common: it kills cravings so well, they forget what they
-              came for. We'll take that complaint.
+              Because the people who buy HUSH and don't <em>love</em> it tend to
+              share one thing in common: it kills cravings so well, they forget
+              what they came for. We'll take that complaint.
             </p>
           </div>
         </div>
@@ -524,7 +611,7 @@ function StatsBar() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 4. SCIENCE-LED (brand makes the scientific case directly)
+// 4. SCIENCE-LED
 // ─────────────────────────────────────────────────────────────────────────────
 function ScienceLed() {
   const studies = [
@@ -567,9 +654,9 @@ function ScienceLed() {
           </h2>
           <p className="text-cream-100/80 text-lg pt-3 max-w-2xl mx-auto leading-relaxed">
             HUSH didn't invent this. We engineered a delivery device around
-            aromatic compounds the scientific literature has been studying
-            for the better part of 30 years. Here are the three studies we
-            built the formula on.
+            aromatic compounds the scientific literature has been studying for
+            the better part of 30 years. Here are the three studies we built
+            the formula on.
           </p>
         </div>
 
@@ -653,7 +740,7 @@ function ProblemBlock() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 5. HOW IT ENDS THE LOOP (mechanism)
+// 6. HOW IT ENDS THE LOOP
 // ─────────────────────────────────────────────────────────────────────────────
 function HowItEnds() {
   const steps = [
@@ -716,7 +803,7 @@ function HowItEnds() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 6. THREE MOMENTS (morning / afternoon / evening)
+// 7. THREE MOMENTS
 // ─────────────────────────────────────────────────────────────────────────────
 function ThreeMoments() {
   const moments = [
@@ -783,7 +870,7 @@ function ThreeMoments() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 7. CAPSULE MECHANICS
+// 8. CAPSULE MECHANICS
 // ─────────────────────────────────────────────────────────────────────────────
 function CapsuleMechanics({ onCta }) {
   return (
@@ -804,17 +891,13 @@ function CapsuleMechanics({ onCta }) {
               <div className="font-display text-5xl text-rosegold leading-none mb-2">
                 30
               </div>
-              <div className="text-sm text-ink-soft">
-                sessions per capsule
-              </div>
+              <div className="text-sm text-ink-soft">sessions per capsule</div>
             </div>
             <div className="text-center">
               <div className="font-display text-5xl text-rosegold leading-none mb-2">
                 25 min
               </div>
-              <div className="text-sm text-ink-soft">
-                per session, auto-off
-              </div>
+              <div className="text-sm text-ink-soft">per session, auto-off</div>
             </div>
             <div className="text-center">
               <div className="font-display text-5xl text-rosegold leading-none mb-2">
@@ -831,21 +914,9 @@ function CapsuleMechanics({ onCta }) {
               How long 1 capsule lasts depending on how you use it
             </div>
             {[
-              {
-                mode: "Once a day",
-                time: "Evening only",
-                duration: "30 days per capsule",
-              },
-              {
-                mode: "Twice a day",
-                time: "Afternoon + evening",
-                duration: "15 days per capsule",
-              },
-              {
-                mode: "Three times a day",
-                time: "Morning + afternoon + evening",
-                duration: "10 days per capsule",
-              },
+              { mode: "Once a day", time: "Evening only", duration: "30 days per capsule" },
+              { mode: "Twice a day", time: "Afternoon + evening", duration: "15 days per capsule" },
+              { mode: "Three times a day", time: "Morning + afternoon + evening", duration: "10 days per capsule" },
             ].map((row, i) => (
               <div
                 key={i}
@@ -868,9 +939,9 @@ function CapsuleMechanics({ onCta }) {
             <Sparkles size={18} className="text-rosegold mt-0.5 flex-shrink-0" />
             <p className="text-sm text-ink-soft leading-relaxed">
               <strong className="text-ink">Most popular setup:</strong> the
-              Discovery Pack (3 capsules) gives you ~3 months of evening rituals,
-              or ~6 weeks if you also use HUSH after lunch. With Subscribe & Save,
-              new capsules arrive automatically every 30 days.
+              Discovery Pack (3 capsules) gives you ~3 months of evening
+              rituals, or ~6 weeks if you also use HUSH after lunch. You can
+              re-buy individual capsules anytime — refills only, no diffuser.
             </p>
           </div>
 
@@ -886,7 +957,7 @@ function CapsuleMechanics({ onCta }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 8. REVIEWS GRID
+// 9. REVIEWS GRID
 // ─────────────────────────────────────────────────────────────────────────────
 function ReviewsGrid() {
   const reviews = [
@@ -987,7 +1058,7 @@ function ReviewsGrid() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 9. DANGER WARNING (counter-claim)
+// 10. DANGER WARNING
 // ─────────────────────────────────────────────────────────────────────────────
 function DangerWarning() {
   return (
@@ -1023,7 +1094,7 @@ function DangerWarning() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 10. WHY HUSH BEATS DIETS
+// 11. WHY HUSH BEATS DIETS
 // ─────────────────────────────────────────────────────────────────────────────
 function WhyHushBeats({ onCta }) {
   const rows = [
@@ -1104,7 +1175,7 @@ function WhyHushBeats({ onCta }) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 11. UGC GRID
+// 12. UGC GRID
 // ─────────────────────────────────────────────────────────────────────────────
 function UgcGrid() {
   const photos = [
@@ -1161,7 +1232,7 @@ function UgcGrid() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 12. LEAKED LAB
+// 13. LEAKED LAB
 // ─────────────────────────────────────────────────────────────────────────────
 function LeakedLab() {
   const compounds = [
@@ -1223,7 +1294,7 @@ function LeakedLab() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 13. WHAT'S IN THE BOX
+// 14. WHAT'S IN THE BOX
 // ─────────────────────────────────────────────────────────────────────────────
 function WhatsInBox() {
   const items = [
@@ -1253,7 +1324,9 @@ function WhatsInBox() {
           <h2 className="h-display text-3xl md:text-5xl leading-tight">
             Open the box.
             <br />
-            <span className="italic text-rosegold">Be in your first session in 90 seconds.</span>
+            <span className="italic text-rosegold">
+              Be in your first session in 90 seconds.
+            </span>
           </h2>
           <p className="text-lg text-ink-soft leading-relaxed">
             Plug in the USB-C cable. Drop a capsule. Press once. The whole
@@ -1277,7 +1350,7 @@ function WhatsInBox() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 14. SPECS
+// 15. SPECS
 // ─────────────────────────────────────────────────────────────────────────────
 function SpecsBlock() {
   const specs = [
@@ -1321,7 +1394,7 @@ function SpecsBlock() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 15. SCIENCE
+// 16. SCIENCE
 // ─────────────────────────────────────────────────────────────────────────────
 function QuietScience() {
   return (
@@ -1340,26 +1413,30 @@ function QuietScience() {
 
         <div className="space-y-7 text-cream-100/85 leading-relaxed text-base md:text-lg">
           <p>
-            <strong className="text-cream-50">Step 1 — The aromatic
-            molecules enter through olfactory receptors.</strong> The olfactory
-            system is the only sensory pathway with a direct line to the
-            limbic brain — the region that runs mood, habit and appetite
-            signaling. Within seconds of inhaling HUSH, peppermint and
+            <strong className="text-cream-50">
+              Step 1 — The aromatic molecules enter through olfactory receptors.
+            </strong>{" "}
+            The olfactory system is the only sensory pathway with a direct line
+            to the limbic brain — the region that runs mood, habit and
+            appetite signaling. Within seconds of inhaling HUSH, peppermint and
             grapefruit compounds begin acting on the same neural circuits
             studied by Raudenbush, Niijima and Nagai for over two decades.
           </p>
           <p>
-            <strong className="text-cream-50">Step 2 — The cravings loop
-            shuts down.</strong> The brain stops sending the "I want food"
-            signal. Most users feel it within 7 minutes — the same window
-            documented in the published literature on peppermint and snacking
-            behavior. The pull toward the kitchen quiets. The hand stops
-            reaching for the cookie jar.
+            <strong className="text-cream-50">
+              Step 2 — The cravings loop shuts down.
+            </strong>{" "}
+            The brain stops sending the "I want food" signal. Most users feel
+            it within 7 minutes — the same window documented in the published
+            literature on peppermint and snacking behavior. The pull toward
+            the kitchen quiets. The hand stops reaching for the cookie jar.
           </p>
           <p>
-            <strong className="text-cream-50">Step 3 — Less appetite means
-            fewer calories. Fewer calories means weight loss.</strong> No
-            mystery, no marketing trick. The 12,000+ Americans using HUSH
+            <strong className="text-cream-50">
+              Step 3 — Less appetite means fewer calories. Fewer calories means
+              weight loss.
+            </strong>{" "}
+            No mystery, no marketing trick. The 12,000+ Americans using HUSH
             daily report an average loss of 4.1 kg in 8 weeks — without
             dieting, without exercise programs, without willpower budgets.
           </p>
@@ -1382,7 +1459,7 @@ function QuietScience() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 16. FOUNDER'S NOTE
+// 17. FOUNDER'S NOTE
 // ─────────────────────────────────────────────────────────────────────────────
 function FoundersNote() {
   return (
@@ -1426,7 +1503,9 @@ function FoundersNote() {
             </p>
           </div>
           <div className="pt-2 flex items-center gap-3">
-            <span className="font-display text-xl italic text-ink">— The AromaFit team</span>
+            <span className="font-display text-xl italic text-ink">
+              — The AromaFit team
+            </span>
           </div>
         </div>
       </div>
@@ -1435,7 +1514,7 @@ function FoundersNote() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 17. GUARANTEE
+// 18. GUARANTEE
 // ─────────────────────────────────────────────────────────────────────────────
 function GuaranteeBlock() {
   return (
@@ -1456,9 +1535,7 @@ function GuaranteeBlock() {
           <p className="text-lg text-ink-soft max-w-2xl mx-auto leading-relaxed">
             We're so sure HUSH will become part of your day that we don't even
             want it back if it doesn't. After 30 days, just email us. We refund
-            100%. No return, no paperwork, no questions, no upsell call. The
-            box is yours, the diffuser is yours, the half-used capsule is
-            yours.
+            100%. No return, no paperwork, no questions, no upsell call.
           </p>
           <p className="text-xs text-ink-soft pt-2">
             Will some people abuse it? Yes. We've done the math. It's worth it.
@@ -1470,20 +1547,20 @@ function GuaranteeBlock() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 18. BUILD YOUR HUSH
+// 19. BUILD YOUR HUSH
 // ─────────────────────────────────────────────────────────────────────────────
 function BuildYourHush({
-  scent,
-  setScent,
-  bundle,
-  setBundle,
-  subscription,
-  setSubscription,
+  mode,
+  setMode,
+  bundleSize,
+  setBundleSize,
+  selectedScents,
+  setScentAt,
+  currentBundles,
+  selectedBundle,
   finalPrice,
   ctaRef,
 }) {
-  const selectedBundle = BUNDLES.find((b) => b.id === bundle);
-
   return (
     <section
       ref={ctaRef}
@@ -1504,13 +1581,39 @@ function BuildYourHush({
           </p>
         </div>
 
+        {/* MODE TABS */}
+        <div className="max-w-md mx-auto mb-8">
+          <div className="grid grid-cols-2 gap-2.5 bg-cream-50 p-1.5 rounded-2xl border border-cream-200">
+            <button
+              onClick={() => setMode("starter")}
+              className={`rounded-xl py-3 text-sm font-medium transition ${
+                mode === "starter"
+                  ? "bg-ink text-cream-50"
+                  : "text-ink-soft hover:text-ink"
+              }`}
+            >
+              Starter Kit (with diffuser)
+            </button>
+            <button
+              onClick={() => setMode("refill")}
+              className={`rounded-xl py-3 text-sm font-medium transition ${
+                mode === "refill"
+                  ? "bg-ink text-cream-50"
+                  : "text-ink-soft hover:text-ink"
+              }`}
+            >
+              Refills only
+            </button>
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
-          {BUNDLES.map((b) => (
+          {currentBundles.map((b) => (
             <article
               key={b.id}
-              onClick={() => setBundle(b.id)}
+              onClick={() => setBundleSize(b.capsules)}
               className={`relative rounded-3xl p-7 cursor-pointer transition border-2 ${
-                bundle === b.id
+                bundleSize === b.capsules
                   ? "border-ink"
                   : "border-cream-200 hover:border-ink/30"
               } ${
@@ -1560,7 +1663,7 @@ function BuildYourHush({
               </div>
               <div
                 className={`text-xs uppercase tracking-widest text-center py-2 rounded-full ${
-                  bundle === b.id
+                  bundleSize === b.capsules
                     ? b.popular
                       ? "bg-cream-50 text-ink"
                       : "bg-ink text-cream-50"
@@ -1569,71 +1672,22 @@ function BuildYourHush({
                     : "bg-cream-100 text-ink-soft"
                 }`}
               >
-                {bundle === b.id ? "Selected" : "Select"}
+                {bundleSize === b.capsules ? "Selected" : "Select"}
               </div>
             </article>
           ))}
         </div>
 
-        {/* Sub vs One-time */}
-        <div className="max-w-md mx-auto mb-5">
-          <div className="grid grid-cols-2 gap-2.5">
-            <button
-              onClick={() => setSubscription(false)}
-              className={`rounded-2xl p-3.5 text-left transition border-2 ${
-                !subscription
-                  ? "border-ink bg-cream-50"
-                  : "border-cream-200 bg-cream-50 hover:border-ink/40"
-              }`}
-            >
-              <div className="font-display text-base">One-time</div>
-              <div className="text-xs text-ink-soft">${selectedBundle.price}</div>
-            </button>
-            <button
-              onClick={() => setSubscription(true)}
-              className={`rounded-2xl p-3.5 text-left transition border-2 relative ${
-                subscription
-                  ? "border-rosegold bg-cream-50"
-                  : "border-cream-200 bg-cream-50 hover:border-rosegold/40"
-              }`}
-            >
-              <span className="absolute -top-2 right-2 bg-rosegold text-cream-50 text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full">
-                Save 20%
-              </span>
-              <div className="font-display text-base flex items-center gap-1.5">
-                <RefreshCw size={12} className="text-rosegold" /> Subscribe
-              </div>
-              <div className="text-xs text-rosegold font-medium">
-                ${Math.round(selectedBundle.price * 0.8)}
-              </div>
-            </button>
-          </div>
-        </div>
-
-        {/* Mini scent picker */}
+        {/* MULTI SCENT SELECTOR */}
         <div className="max-w-md mx-auto mb-6">
           <div className="text-xs uppercase tracking-widest text-ink font-medium mb-2.5 text-center">
-            Your starting scent
+            Pick the scent for each capsule
           </div>
-          <div className="grid grid-cols-3 gap-2.5">
-            {SCENTS.map((s) => (
-              <button
-                key={s.id}
-                onClick={() => setScent(s.id)}
-                className={`rounded-2xl p-3 text-center transition border-2 ${
-                  scent === s.id
-                    ? "border-ink bg-cream-50"
-                    : "border-cream-200 bg-cream-50 hover:border-ink/40"
-                }`}
-              >
-                <span
-                  className="h-3 w-3 rounded-full mx-auto block mb-1.5"
-                  style={{ background: s.color }}
-                />
-                <div className="font-display text-base">{s.name}</div>
-              </button>
-            ))}
-          </div>
+          <CapsuleSlots
+            count={bundleSize}
+            selectedScents={selectedScents}
+            setScentAt={setScentAt}
+          />
         </div>
 
         <div className="max-w-md mx-auto">
@@ -1651,7 +1705,7 @@ function BuildYourHush({
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 19. PRODUCT FAQ
+// 20. PRODUCT FAQ
 // ─────────────────────────────────────────────────────────────────────────────
 function ProductFAQ() {
   const faqs = [
@@ -1664,6 +1718,14 @@ function ProductFAQ() {
       a: "Each HUSH capsule is rated for 30 sessions of 25 minutes each. If you use it once a day (e.g. evening only) one capsule lasts ~30 days. Twice a day (afternoon + evening) → ~15 days. Three times a day (morning + afternoon + evening) → ~10 days. The Discovery Pack (3 capsules) covers most users for 1.5 to 3 months.",
     },
     {
+      q: "Can I mix and match scents in the same bundle?",
+      a: "Absolutely. When you pick a 3-capsule or 6-capsule bundle, you can choose any combination of Mint, Citrus and Spice — or pick three of the same. We don't lock the scent. The Discovery Pack with one of each is the most popular configuration.",
+    },
+    {
+      q: "I already own a HUSH. Can I just buy refill capsules?",
+      a: "Yes. Switch the buy box to 'Refills only'. You get the same capsules without the diffuser, at lower prices. You can mix and match scents in your refill pack just like in the starter kits.",
+    },
+    {
       q: "When during the day should I use HUSH?",
       a: "Whenever the cravings hit — morning, afternoon, or evening. Most customers start with one daily session after dinner (the famous 9 PM kitchen walk) and then add a second afternoon session if they want to control the 3 PM sugar crash too.",
     },
@@ -1674,10 +1736,6 @@ function ProductFAQ() {
     {
       q: "Is the appetite-suppression effect actually real, or is it placebo?",
       a: "It's real, and the science backs it. Peppermint aromatic compounds have been studied for over 15 years for their effect on appetite signaling — most notably by Bryan Raudenbush at Wheeling Jesuit University, whose participants ate 1,800 fewer calories per week without dieting. Grapefruit aroma has been studied for satiety regulation since the 1990s (Niijima/Nagai, Osaka University). Vanilla for sweet-craving control (St. George's Hospital, London). HUSH combines all three into one device. When 12,000+ Americans report the same effect daily, it's no longer a question of placebo.",
-    },
-    {
-      q: "How does Subscribe & Save work?",
-      a: "Subscribe & Save 20% gives you 20% off your first order and ships fresh capsules every 30 days. Pause, change scent, or cancel anytime from your account — no calls, no friction.",
     },
     {
       q: "Which scent should I start with?",
@@ -1734,7 +1792,7 @@ function ProductFAQ() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 20. FINAL CTA
+// 21. FINAL CTA
 // ─────────────────────────────────────────────────────────────────────────────
 function FinalCTA({ onCta }) {
   return (
@@ -1756,9 +1814,10 @@ function FinalCTA({ onCta }) {
           <span className="italic text-rosegold">In your own kitchen.</span>
         </h2>
         <p className="text-lg md:text-xl text-ink-soft max-w-xl mx-auto leading-relaxed">
-          12,000+ Americans have already done it. Average loss: <strong>4.1 kg
-          in 8 weeks</strong>, no dieting, no exercise. The Discovery Pack lasts
-          up to three months. The risk is zero — you keep the device either way.
+          12,000+ Americans have already done it. Average loss:{" "}
+          <strong>4.1 kg in 8 weeks</strong>, no dieting, no exercise. The
+          Discovery Pack lasts up to three months. The risk is zero — you keep
+          the device either way.
         </p>
         <div className="pt-2">
           <button onClick={onCta} className="btn-primary text-base !py-5 !px-10">
@@ -1776,7 +1835,7 @@ function FinalCTA({ onCta }) {
 // ─────────────────────────────────────────────────────────────────────────────
 // STICKY ADD-TO-CART BAR
 // ─────────────────────────────────────────────────────────────────────────────
-function StickyAddToCart({ finalPrice, selectedBundle, scent, heroRef, onCta }) {
+function StickyAddToCart({ finalPrice, selectedBundle, selectedScents, heroRef, onCta }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -1789,7 +1848,18 @@ function StickyAddToCart({ finalPrice, selectedBundle, scent, heroRef, onCta }) 
     return () => window.removeEventListener("scroll", onScroll);
   }, [heroRef]);
 
-  const scentName = SCENTS.find((s) => s.id === scent)?.name;
+  const scentSummary = (() => {
+    const counts = selectedScents.reduce((acc, s) => {
+      acc[s] = (acc[s] || 0) + 1;
+      return acc;
+    }, {});
+    return Object.entries(counts)
+      .map(([id, n]) => {
+        const name = SCENTS.find((s) => s.id === id)?.name || id;
+        return n > 1 ? `${n}× ${name}` : name;
+      })
+      .join(" · ");
+  })();
 
   return (
     <div
@@ -1811,7 +1881,7 @@ function StickyAddToCart({ finalPrice, selectedBundle, scent, heroRef, onCta }) 
             </div>
             <div className="min-w-0">
               <div className="text-xs text-ink-soft truncate">
-                AromaFit · HUSH {scentName}
+                AromaFit · HUSH · {scentSummary}
               </div>
               <div className="font-display text-base md:text-lg leading-tight truncate">
                 {selectedBundle.name} · ${finalPrice}

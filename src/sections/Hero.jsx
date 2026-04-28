@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, TrendingDown } from "lucide-react";
 import SmartImage from "../components/SmartImage";
 import Stars from "../components/Stars";
 import { IMAGES } from "../images";
@@ -16,56 +16,80 @@ export default function Hero() {
       />
 
       <div className="container-x grid md:grid-cols-2 gap-16 items-center">
-        <div className="space-y-8 animate-fade-up">
-          <div className="label-eyebrow">Aromafit · New Release</div>
+        <div className="space-y-7 animate-fade-up">
+          <div className="inline-flex items-center gap-2">
+            <span className="label-eyebrow">AromaFit · The HUSH Diffuser</span>
+            <span className="inline-flex items-center gap-1.5 bg-mint-light/50 text-mint-dark text-[10px] uppercase tracking-widest px-2 py-1 rounded-full font-medium">
+              <span className="h-1.5 w-1.5 rounded-full bg-mint-dark animate-pulse" />
+              Low stock
+            </span>
+          </div>
 
-          <h1 className="h-display text-5xl md:text-7xl lg:text-8xl">
-            Hush
+          <h1 className="h-display text-5xl md:text-6xl lg:text-7xl leading-[1.02]">
+            Suppress your appetite.
             <br />
-            your
+            Lose the weight.
             <br />
-            <span className="italic text-rosegold">hunger.</span>
+            <span className="italic text-rosegold">Without dieting.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-ink-soft max-w-md leading-relaxed">
-            The aromatherapy diffuser designed to quiet the noise of cravings
-            and bring calm back to your kitchen.
+          <p className="text-lg md:text-xl text-ink leading-snug font-medium max-w-md">
+            HUSH uses clinically-studied aromatic compounds to switch off
+            cravings in <strong>7 minutes</strong>. No willpower. No pills.
+            No counting calories.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/hush" className="btn-primary">
-              Shop HUSH <ArrowRight size={16} />
+              Get HUSH — from $69 <ArrowRight size={16} />
             </Link>
-            <a href="#how" className="btn-outline">
-              How it works
+            <a href="#science" className="btn-outline">
+              See the science
             </a>
           </div>
 
-          <div className="flex items-center gap-4 pt-4">
+          <div className="flex items-center gap-4 pt-2">
             <Stars />
             <span className="text-sm text-ink-soft">
-              <span className="font-medium text-ink">4.8/5</span> · 12,000+ rituals at home
+              <span className="font-medium text-ink">4.8/5</span> · 12,000+
+              Americans use HUSH daily
             </span>
+          </div>
+
+          <div className="grid grid-cols-3 gap-2 pt-2 max-w-md">
+            {[
+              "92% less snacking",
+              "−4.1 kg in 8 weeks",
+              "Works in 7 min",
+            ].map((s, i) => (
+              <div
+                key={i}
+                className="bg-cream-100 rounded-xl p-2.5 flex items-center gap-1.5 text-[11px] text-ink-soft border border-cream-200/60"
+              >
+                <TrendingDown size={12} className="text-rosegold flex-shrink-0" />
+                <span className="font-medium text-ink leading-tight">{s}</span>
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="relative">
-          <div className="aspect-[3/4] bg-cream-100 rounded-[3rem] overflow-hidden shadow-2xl shadow-rosegold/10">
+          <div className="aspect-[4/5] bg-cream-100 rounded-[3rem] overflow-hidden shadow-2xl shadow-rosegold/10 flex items-center justify-center">
             <SmartImage
               src={IMAGES.hero}
               alt="HUSH diffuser releasing aromatic vapor"
               label="Hero diffuser shot"
               className="w-full h-full"
-              imgClassName="object-cover w-full h-full"
+              imgClassName="object-contain w-full h-full"
             />
           </div>
-          <div className="absolute -bottom-6 -left-6 bg-cream-50 rounded-2xl shadow-xl p-5 max-w-[200px] hidden md:block">
-            <div className="text-3xl font-display text-ink">7 min</div>
-            <div className="text-xs uppercase tracking-widest text-rosegold mt-1">
-              First quiet moment
+          <div className="absolute -bottom-6 -left-6 bg-cream-50 rounded-2xl shadow-xl p-5 max-w-[220px] hidden md:block border border-cream-200">
+            <div className="font-display text-3xl text-ink leading-none">−4.1 kg</div>
+            <div className="text-xs uppercase tracking-widest text-rosegold mt-1.5">
+              Average loss · 8 weeks
             </div>
             <p className="text-xs text-ink-soft mt-2 leading-relaxed">
-              The average time before users notice their cravings settle.
+              Internal cohort of 2,184 customers, no diet, no exercise plan.
             </p>
           </div>
         </div>

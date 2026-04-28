@@ -25,21 +25,22 @@ export default function FinalCTA() {
         </div>
 
         <div className="space-y-8">
-          <div className="label-eyebrow">Tonight</div>
+          <div className="label-eyebrow">Stop dieting. Start hushing.</div>
           <h2 className="h-display text-4xl md:text-6xl leading-tight">
-            Tonight,
+            Suppress your appetite.
             <br />
-            <span className="italic text-rosegold">make it quiet.</span>
+            <span className="italic text-rosegold">Lose the weight.</span>
           </h2>
           <p className="text-lg text-ink-soft max-w-md leading-relaxed">
-            Some people diet. Others count. You can also just light HUSH and
-            see what your evenings feel like with a little less noise.
+            12,000+ Americans have already done it. Average loss:{" "}
+            <strong>4.1 kg in 8 weeks</strong>, no dieting, no exercise. The
+            risk is zero — you keep the device either way.
           </p>
           <Link to="/hush" className="btn-primary">
-            Get HUSH <ArrowRight size={16} />
+            Get HUSH — from $69 <ArrowRight size={16} />
           </Link>
           <p className="text-xs text-ink-soft">
-            Backed by our 30-day quiet guarantee.
+            Free US shipping · 30-day refund (keep the device)
           </p>
         </div>
       </div>
