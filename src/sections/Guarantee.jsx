@@ -1,6 +1,8 @@
 import { Shield } from "lucide-react";
+import { useT } from "../lang/LanguageContext";
 
 export default function Guarantee() {
+  const { t } = useT();
   return (
     <section className="py-24 md:py-32">
       <div className="container-narrow">
@@ -8,22 +10,16 @@ export default function Guarantee() {
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-cream-50 border border-cream-200">
             <Shield size={28} className="text-rosegold" />
           </div>
-          <div className="label-eyebrow">The 30-day "keep it" guarantee</div>
+          <div className="label-eyebrow">{t("guarantee.eyebrow")}</div>
           <h2 className="h-display text-3xl md:text-5xl">
-            Try HUSH for 30 days.
+            {t("guarantee.h2.line1")}
             <br />
-            <span className="italic text-rosegold">
-              Don't love it? Keep it. We'll refund you anyway.
-            </span>
+            <span className="italic text-rosegold">{t("guarantee.h2.line2")}</span>
           </h2>
           <p className="text-lg text-ink-soft max-w-2xl mx-auto leading-relaxed">
-            We're so sure HUSH will become part of your day that we don't even
-            want it back if it doesn't. After 30 days, just email us. We refund
-            100%. No return. No paperwork. No questions. No upsell call.
+            {t("guarantee.body")}
           </p>
-          <p className="text-xs text-ink-soft pt-2">
-            Will some people abuse it? Yes. We've done the math. It's worth it.
-          </p>
+          <p className="text-xs text-ink-soft pt-2">{t("guarantee.fineprint")}</p>
         </div>
       </div>
     </section>

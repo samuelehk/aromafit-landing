@@ -1,10 +1,13 @@
+import { useT } from "../lang/LanguageContext";
+
 export default function TrustStrip() {
+  const { t } = useT();
   const items = [
-    "92% less snacking after 7 days",
-    "−4.1 kg average loss in 8 weeks",
-    "Works in 7 minutes",
-    "12,000+ Americans daily",
-    "30-day refund — keep the device",
+    t("trust.snacking"),
+    t("trust.lossweight"),
+    t("trust.fast"),
+    t("trust.americans"),
+    t("trust.refund"),
   ];
 
   return (

@@ -1,4 +1,5 @@
 import Stars from "../components/Stars";
+import { useT } from "../lang/LanguageContext";
 
 const reviews = [
   {
@@ -46,19 +47,20 @@ const reviews = [
 ];
 
 export default function Reviews() {
+  const { t } = useT();
   return (
     <section id="reviews" className="py-24 md:py-32">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <div className="label-eyebrow">12,000+ Americans · 2,184 reviews</div>
+          <div className="label-eyebrow">{t("reviews.eyebrow")}</div>
           <h2 className="h-display text-4xl md:text-5xl">
-            The reviews that started{" "}
-            <span className="italic text-rosegold">the panic at HQ.</span>
+            {t("reviews.h2.pre")}{" "}
+            <span className="italic text-rosegold">{t("reviews.h2.bold")}</span>
           </h2>
           <div className="flex items-center justify-center gap-3 pt-2">
             <Stars />
             <span className="text-sm text-ink-soft">
-              <strong className="text-ink">4.8 / 5</strong> average rating
+              <strong className="text-ink">4.8 / 5</strong> {t("reviews.rating.label")}
             </span>
           </div>
         </div>
@@ -81,7 +83,7 @@ export default function Reviews() {
               <div className="text-xs text-ink-soft pt-3 border-t border-cream-200/80">
                 <span className="font-medium text-ink">{r.name}</span> ·{" "}
                 {r.location} ·{" "}
-                <span className="text-rosegold">Verified buyer</span>
+                <span className="text-rosegold">{t("reviews.verified")}</span>
               </div>
             </article>
           ))}

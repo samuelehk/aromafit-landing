@@ -1,61 +1,54 @@
 import SmartImage from "../components/SmartImage";
 import { IMAGES } from "../images";
+import { useT } from "../lang/LanguageContext";
 
 export default function Story() {
+  const { t } = useT();
   return (
     <section className="py-24 md:py-32">
       <div className="container-x grid md:grid-cols-5 gap-16 items-center">
         <div className="md:col-span-3 space-y-7">
-          <div className="label-eyebrow">A reader's story</div>
+          <div className="label-eyebrow">{t("story.eyebrow")}</div>
           <h2 className="h-display text-4xl md:text-5xl leading-tight">
-            "I lost 4 kg without trying.
+            {t("story.h2.line1")}
             <br />
-            <span className="italic text-rosegold">
-              I just stopped opening the fridge at 10 PM."
-            </span>
+            <span className="italic text-rosegold">{t("story.h2.line2")}</span>
           </h2>
 
           <div className="space-y-5 text-ink-soft text-lg leading-relaxed">
+            <p>{t("story.body1")}</p>
             <p>
-              Rachel had tried everything. Intermittent fasting. The
-              Mediterranean diet. Three different apps that counted the same
-              calories. The one thing she could never quiet was the 9 PM walk
-              to the kitchen — the one she swore she'd skip every morning.
+              {t("story.body2.pre")}{" "}
+              <em>{t("story.body2.em")}</em>
+              {t("story.body2.post")}
             </p>
             <p>
-              A friend texted her a photo of HUSH with one line:{" "}
-              <em>"I know it sounds ridiculous. Try it anyway."</em> She
-              laughed. She bought it.
+              {t("story.body3.pre")}{" "}
+              <em>{t("story.body3.em")}</em>
             </p>
             <p>
-              Night one, she pressed the button after dinner and didn't think
-              much. Night four, her partner asked if she'd stopped snacking
-              after dinner. <em>"You haven't been to the pantry in days."</em>
-            </p>
-            <p>
-              Three weeks later, her jeans buttoned without the jump.
-              <strong className="text-ink"> Down 4 kg.</strong> No diet. No
-              gym. Just a button she pressed every evening at 9 PM.
+              {t("story.body4.pre")}
+              <strong className="text-ink">{t("story.body4.bold")}</strong>
+              {t("story.body4.post")}
             </p>
             <p className="text-ink font-medium italic font-display text-2xl">
-              "It wasn't willpower. It was a quieter brain around food."
+              {t("story.body5")}
             </p>
           </div>
 
           <div className="text-xs text-ink-soft/80 pt-2">
-            — Rachel K., Phoenix, AZ. Personal account shared with
-            permission. Individual results vary.
+            {t("story.attribution")}
           </div>
         </div>
 
         <div className="md:col-span-2">
-          <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden bg-cream-100">
+          <div className="rounded-[2.5rem] overflow-hidden bg-cream-100">
             <SmartImage
               src={IMAGES.lifestyleSofa}
               alt="A woman relaxing on a sofa with a HUSH diffuser nearby"
               label="Lifestyle — sofa moment"
-              className="w-full h-full"
-              imgClassName="object-cover w-full h-full"
+              className="w-full h-auto"
+              imgClassName="object-contain w-full h-auto"
             />
           </div>
         </div>

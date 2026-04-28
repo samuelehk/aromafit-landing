@@ -1,33 +1,23 @@
 import SmartImage from "../components/SmartImage";
 import { IMAGES } from "../images";
-
-const steps = [
-  {
-    n: "01",
-    title: "Press once",
-    body: "The diffuser releases the HUSH aromatic blend — peppermint, eucalyptus, plant-derived compounds. Silent. Vapor begins in seconds.",
-  },
-  {
-    n: "02",
-    title: "Breathe for 7 minutes",
-    body: "The cravings loop softens. Most users feel it inside the first 7 minutes — the same window documented in the Raudenbush 2008 study.",
-  },
-  {
-    n: "03",
-    title: "Walk away",
-    body: "After 25 minutes the device shuts off. The craving doesn't come back. You go on with your day — without the snack you didn't want to want.",
-  },
-];
+import { useT } from "../lang/LanguageContext";
 
 export default function HowItWorks() {
+  const { t } = useT();
+  const steps = [
+    { n: "01", title: t("how.step1.title"), body: t("how.step1.body") },
+    { n: "02", title: t("how.step2.title"), body: t("how.step2.body") },
+    { n: "03", title: t("how.step3.title"), body: t("how.step3.body") },
+  ];
+
   return (
     <section id="how" className="py-24 md:py-32">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-          <div className="label-eyebrow">How HUSH ends the loop</div>
+          <div className="label-eyebrow">{t("how.eyebrow")}</div>
           <h2 className="h-display text-4xl md:text-5xl">
-            Three steps.{" "}
-            <span className="italic text-rosegold">Zero willpower.</span>
+            {t("how.h2.pre")}{" "}
+            <span className="italic text-rosegold">{t("how.h2.bold")}</span>
           </h2>
         </div>
 

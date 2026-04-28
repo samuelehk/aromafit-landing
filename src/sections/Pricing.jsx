@@ -1,69 +1,69 @@
 import { Link } from "react-router-dom";
 import { Check } from "lucide-react";
-
-const plans = [
-  {
-    name: "Starter",
-    price: "$79",
-    crossed: "$99",
-    desc: "Diffuser + 1 capsule of your choice.",
-    days: "Lasts ~15-30 days",
-    features: [
-      "HUSH Diffuser",
-      "1 capsule (Mint, Citrus, or Spice)",
-      "USB-C cable & adapter",
-      "30-day refund — keep the device",
-    ],
-    cta: "Get HUSH",
-    popular: false,
-  },
-  {
-    name: "Discovery",
-    price: "$89",
-    crossed: "$129",
-    desc: "Diffuser + 3 capsules. Mix scents however you want.",
-    days: "Lasts ~45-90 days",
-    features: [
-      "HUSH Diffuser",
-      "3 capsules — pick any combination of scents",
-      "HUSH Discovery box",
-      "30-day refund — keep the device",
-      "Free US shipping",
-    ],
-    cta: "Build my Discovery Pack",
-    popular: true,
-  },
-  {
-    name: "Ritual",
-    price: "$99",
-    crossed: "$169",
-    desc: "Diffuser + 6 capsules for daily ritualists.",
-    days: "Lasts ~90-180 days",
-    features: [
-      "HUSH Diffuser",
-      "6 capsules (mix & match scents)",
-      "Wellness journal (printed)",
-      "30-day refund — keep the device",
-      "Free US shipping & priority care",
-    ],
-    cta: "Build my Ritual",
-    popular: false,
-  },
-];
+import { useT } from "../lang/LanguageContext";
 
 export default function Pricing() {
+  const { t } = useT();
+  const plans = [
+    {
+      name: t("pricing.starter.name"),
+      price: "$79",
+      crossed: "$99",
+      desc: t("pricing.starter.desc"),
+      days: t("pricing.starter.days"),
+      features: [
+        t("pricing.starter.f1"),
+        t("pricing.starter.f2"),
+        t("pricing.starter.f3"),
+        t("pricing.starter.f4"),
+      ],
+      cta: t("pricing.starter.cta"),
+      popular: false,
+    },
+    {
+      name: t("pricing.discovery.name"),
+      price: "$89",
+      crossed: "$129",
+      desc: t("pricing.discovery.desc"),
+      days: t("pricing.discovery.days"),
+      features: [
+        t("pricing.discovery.f1"),
+        t("pricing.discovery.f2"),
+        t("pricing.discovery.f3"),
+        t("pricing.discovery.f4"),
+        t("pricing.discovery.f5"),
+      ],
+      cta: t("pricing.discovery.cta"),
+      popular: true,
+    },
+    {
+      name: t("pricing.ritual.name"),
+      price: "$99",
+      crossed: "$169",
+      desc: t("pricing.ritual.desc"),
+      days: t("pricing.ritual.days"),
+      features: [
+        t("pricing.ritual.f1"),
+        t("pricing.ritual.f2"),
+        t("pricing.ritual.f3"),
+        t("pricing.ritual.f4"),
+        t("pricing.ritual.f5"),
+      ],
+      cta: t("pricing.ritual.cta"),
+      popular: false,
+    },
+  ];
+
   return (
     <section id="pricing" className="py-24 md:py-32 bg-cream-100">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-          <div className="label-eyebrow">Choose your bundle</div>
+          <div className="label-eyebrow">{t("pricing.eyebrow")}</div>
           <h2 className="h-display text-4xl md:text-5xl">
-            One device.{" "}
-            <span className="italic text-rosegold">Less appetite.</span>
+            {t("pricing.h2.pre")}{" "}
+            <span className="italic text-rosegold">{t("pricing.h2.bold")}</span>
           </h2>
-          <p className="text-lg text-ink-soft pt-2">
-            Already own a HUSH? You can buy refills only on the product page.
-          </p>
+          <p className="text-lg text-ink-soft pt-2">{t("pricing.lead")}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
@@ -78,7 +78,7 @@ export default function Pricing() {
             >
               {p.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-rosegold text-cream-50 text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-full">
-                  Most Loved
+                  {t("pricing.mostloved")}
                 </div>
               )}
 

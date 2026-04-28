@@ -118,12 +118,6 @@ export default function Header() {
         </div>
       )}
 
-      {/* Subtle hint when IT is active */}
-      {lang === "it" && (
-        <div className="bg-rosegold/10 border-b border-rosegold/20 text-[11px] text-ink-soft text-center py-1.5">
-          {t("lang.hint")}
-        </div>
-      )}
     </header>
   );
 }

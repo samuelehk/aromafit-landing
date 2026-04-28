@@ -1,55 +1,51 @@
 import SmartImage from "../components/SmartImage";
 import { IMAGES } from "../images";
 import { Link } from "react-router-dom";
-
-const scents = [
-  {
-    name: "Mint",
-    color: "#A9C4A8",
-    notes: "Peppermint · Eucalyptus",
-    moment: "Morning to afternoon",
-    description:
-      "The strongest craving-killer in the lineup. Built around peppermint — the most-studied aromatic profile in the appetite-and-cravings literature. Our flagship.",
-  },
-  {
-    name: "Citrus",
-    color: "#E8D69A",
-    notes: "White grapefruit · Bergamot · Lemon",
-    moment: "The 3 PM sugar crash",
-    description:
-      "Crisp and luminous. Built on grapefruit aroma, studied at Osaka University for its effect on satiety regulation. Designed for the in-between hours.",
-  },
-  {
-    name: "Spice",
-    color: "#D4A582",
-    notes: "Cinnamon · Cold vanilla · Cardamom",
-    moment: "After dinner & evening",
-    description:
-      "Warm, dessert-like, deeply calming. The dessert-killer — built around vanilla, the aroma documented to drop sweet cravings in clinical settings.",
-  },
-];
+import { useT } from "../lang/LanguageContext";
 
 export default function Scents() {
+  const { t } = useT();
+  const scents = [
+    {
+      name: t("scent.mint.name"),
+      color: "#A9C4A8",
+      notes: t("scents.mint.notes"),
+      moment: t("scents.mint.moment"),
+      description: t("scents.mint.desc"),
+    },
+    {
+      name: t("scent.citrus.name"),
+      color: "#E8D69A",
+      notes: t("scents.citrus.notes"),
+      moment: t("scents.citrus.moment"),
+      description: t("scents.citrus.desc"),
+    },
+    {
+      name: t("scent.spice.name"),
+      color: "#D4A582",
+      notes: t("scents.spice.notes"),
+      moment: t("scents.spice.moment"),
+      description: t("scents.spice.desc"),
+    },
+  ];
+
   return (
     <section className="py-24 md:py-32 bg-cream-100">
       <div className="container-x">
         <div className="text-center max-w-2xl mx-auto mb-20 space-y-4">
-          <div className="label-eyebrow">The HUSH Collection</div>
+          <div className="label-eyebrow">{t("scents.eyebrow")}</div>
           <h2 className="h-display text-4xl md:text-5xl">
-            Three scents.
+            {t("scents.h2.line1")}
             <br />
-            <span className="italic text-rosegold">One job: less appetite.</span>
+            <span className="italic text-rosegold">{t("scents.h2.line2")}</span>
           </h2>
-          <p className="text-lg text-ink-soft pt-2">
-            Pick one. Mix all three. Same diffuser, three aromatic profiles —
-            each built on its own published research.
-          </p>
+          <p className="text-lg text-ink-soft pt-2">{t("scents.lead")}</p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {scents.map((s) => (
+          {scents.map((s, i) => (
             <article
-              key={s.name}
+              key={i}
               className="bg-cream-50 rounded-3xl p-8 flex flex-col gap-5 border border-cream-200/70 hover:shadow-xl hover:shadow-rosegold/5 transition"
             >
               <div className="flex items-center justify-between">
@@ -74,7 +70,7 @@ export default function Scents() {
               </p>
 
               <div className="text-xs text-ink-soft pt-2 border-t border-cream-200/80">
-                Best for:{" "}
+                {t("scents.bestfor")}{" "}
                 <span className="text-ink font-medium">{s.moment}</span>
               </div>
             </article>
@@ -92,19 +88,15 @@ export default function Scents() {
             />
           </div>
           <div className="space-y-5">
-            <div className="label-eyebrow">Discovery Pack · $109</div>
+            <div className="label-eyebrow">{t("scents.discovery.eyebrow")}</div>
             <h3 className="h-display text-3xl md:text-4xl">
-              Pick three scents.
+              {t("scents.discovery.h3.line1")}
               <br />
-              <span className="italic text-rosegold">Mix them how you want.</span>
+              <span className="italic text-rosegold">{t("scents.discovery.h3.line2")}</span>
             </h3>
-            <p className="text-ink-soft text-lg">
-              The Discovery Pack covers ~3 months of evening rituals — or 6
-              weeks if you also use HUSH after lunch. Choose any combination
-              of Mint, Citrus and Spice.
-            </p>
+            <p className="text-ink-soft text-lg">{t("scents.discovery.body")}</p>
             <Link to="/hush" className="btn-primary">
-              Build my Discovery Pack
+              {t("scents.discovery.cta")}
             </Link>
           </div>
         </div>

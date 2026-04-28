@@ -16,13 +16,13 @@ export default function FinalCTA() {
         }}
       />
       <div className="container-x grid md:grid-cols-2 gap-16 items-center">
-        <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden bg-cream-100 order-last md:order-first">
+        <div className="rounded-[2.5rem] overflow-hidden bg-cream-100 order-last md:order-first">
           <SmartImage
             src={IMAGES.lifestyleBedside}
             alt="HUSH diffuser on a marble bedside table at golden hour"
             label="Lifestyle — bedside moment"
-            className="w-full h-full"
-            imgClassName="object-cover w-full h-full"
+            className="w-full h-auto"
+            imgClassName="object-contain w-full h-auto"
           />
         </div>
 
