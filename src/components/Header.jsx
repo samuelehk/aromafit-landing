@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ShoppingBag, Menu, X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useT } from "../lang/LanguageContext";
@@ -7,6 +7,8 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { lang, setLang, t } = useT();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -14,12 +16,35 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Smart navigation: hash links scroll to element when on home page,
+  // otherwise navigate home then scroll.
+  const goTo = (target) => (e) => {
+    e?.preventDefault?.();
+    setOpen(false);
+
+    if (target.startsWith("#")) {
+      const id = target.slice(1);
+      if (pathname === "/") {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        navigate("/" + target);
+      }
+      return;
+    }
+    navigate(target);
+  };
+
   const navLinks = [
-    { to: "/", label: t("nav.home") },
-    { to: "/hush", label: t("nav.shop") },
-    { to: "/#science", label: t("nav.science") },
-    { to: "/#reviews", label: t("nav.reviews") },
+    { target: "/", label: t("nav.home") },
+    { target: "/hush", label: t("nav.shop") },
+    { target: "#science", label: t("nav.science") },
+    { target: "#reviews", label: t("nav.reviews") },
   ];
+
+  const isActive = (target) => {
+    if (target.startsWith("#")) return false;
+    return pathname === target;
+  };
 
   return (
     <header
@@ -39,17 +64,16 @@ export default function Header() {
 
         <nav className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                `text-sm font-medium tracking-wide transition ${
-                  isActive ? "text-ink" : "text-ink/70 hover:text-ink"
-                }`
-              }
+            <a
+              key={link.target}
+              href={link.target.startsWith("#") ? "/" + link.target : link.target}
+              onClick={goTo(link.target)}
+              className={`text-sm font-medium tracking-wide transition cursor-pointer ${
+                isActive(link.target) ? "text-ink" : "text-ink/70 hover:text-ink"
+              }`}
             >
               {link.label}
-            </NavLink>
+            </a>
           ))}
         </nav>
 
@@ -94,21 +118,27 @@ export default function Header() {
       {open && (
         <div className="md:hidden bg-cream-50 border-t border-ink/10 px-6 py-6 space-y-4">
           {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setOpen(false)}
-              className="block text-base font-medium text-ink"
+            <a
+              key={link.target}
+              href={link.target.startsWith("#") ? "/" + link.target : link.target}
+              onClick={goTo(link.target)}
+              className="block text-base font-medium text-ink cursor-pointer"
             >
               {link.label}
-            </Link>
+            </a>
           ))}
           <div className="flex items-center gap-4 pt-2 text-[11px] uppercase tracking-widest text-ink/50">
-            <button onClick={() => setLang("en")} className={lang === "en" ? "text-ink font-medium" : ""}>
+            <button
+              onClick={() => setLang("en")}
+              className={lang === "en" ? "text-ink font-medium" : ""}
+            >
               EN
             </button>
             <span className="text-ink/20">|</span>
-            <button onClick={() => setLang("it")} className={lang === "it" ? "text-ink font-medium" : ""}>
+            <button
+              onClick={() => setLang("it")}
+              className={lang === "it" ? "text-ink font-medium" : ""}
+            >
               IT
             </button>
           </div>
@@ -117,7 +147,6 @@ export default function Header() {
           </Link>
         </div>
       )}
-
     </header>
   );
 }
