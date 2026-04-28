@@ -41,7 +41,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/hush" className="btn-primary">
-              Get HUSH — from $69 <ArrowRight size={16} />
+              Get HUSH — from $79 <ArrowRight size={16} />
             </Link>
             <a href="#science" className="btn-outline">
               See the science

@@ -48,7 +48,7 @@ export default function Solution() {
           </ul>
 
           <Link to="/hush" className="btn-primary mt-2">
-            Get HUSH — from $69 <ArrowRight size={16} />
+            Get HUSH — from $79 <ArrowRight size={16} />
           </Link>
         </div>
       </div>

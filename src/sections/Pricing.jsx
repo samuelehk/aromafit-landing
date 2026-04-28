@@ -4,8 +4,8 @@ import { Check } from "lucide-react";
 const plans = [
   {
     name: "Starter",
-    price: "$69",
-    crossed: "$89",
+    price: "$79",
+    crossed: "$99",
     desc: "Diffuser + 1 capsule of your choice.",
     days: "Lasts ~15-30 days",
     features: [
@@ -19,8 +19,8 @@ const plans = [
   },
   {
     name: "Discovery",
-    price: "$109",
-    crossed: "$147",
+    price: "$89",
+    crossed: "$129",
     desc: "Diffuser + 3 capsules. Mix scents however you want.",
     days: "Lasts ~45-90 days",
     features: [
@@ -35,8 +35,8 @@ const plans = [
   },
   {
     name: "Ritual",
-    price: "$149",
-    crossed: "$209",
+    price: "$99",
+    crossed: "$169",
     desc: "Diffuser + 6 capsules for daily ritualists.",
     days: "Lasts ~90-180 days",
     features: [
