@@ -203,7 +203,11 @@ export const translations = {
     "reviews.h2.pre": "The reviews that started",
     "reviews.h2.bold": "the panic at HQ.",
     "reviews.rating.label": "average rating",
+    "reviews.reviews": "reviews",
     "reviews.verified": "Verified buyer",
+    "reviews.showmore": "Show all 18 reviews",
+    "reviews.showless": "Show fewer reviews",
+    "science.furtherreading": "Further reading",
 
     // ─────────────────────────────────────────────────
     // HOME — PRICING
@@ -517,6 +521,8 @@ export const translations = {
     "previews.verified": "Verified buyer",
     "previews.disclaimer":
       "Reviews reflect personal customer experiences. Individual results vary. HUSH is a wellness aromatherapy device and is not a medical, drug, or weight-loss product.",
+    "previews.showmore": "Show all 18 reviews",
+    "previews.showless": "Show fewer reviews",
 
     // ─────────────────────────────────────────────────
     // PRODUCT — DANGER WARNING
@@ -929,7 +935,11 @@ export const translations = {
     "reviews.h2.pre": "Le recensioni che hanno scatenato",
     "reviews.h2.bold": "il panico in azienda.",
     "reviews.rating.label": "valutazione media",
+    "reviews.reviews": "recensioni",
     "reviews.verified": "Acquirente verificato",
+    "reviews.showmore": "Mostra tutte le 18 recensioni",
+    "reviews.showless": "Mostra meno recensioni",
+    "science.furtherreading": "Approfondisci",
 
     // HOME — PRICING
     "pricing.eyebrow": "Scegli il tuo pacchetto",
@@ -1223,6 +1233,8 @@ export const translations = {
     "previews.verified": "Acquirente verificato",
     "previews.disclaimer":
       "Le recensioni riflettono esperienze personali dei clienti. I risultati individuali variano. HUSH è un dispositivo aromaterapico wellness e non è un prodotto medico, farmaco o per la perdita di peso.",
+    "previews.showmore": "Mostra tutte le 18 recensioni",
+    "previews.showless": "Mostra meno recensioni",
 
     // PRODUCT — DANGER WARNING
     "danger.eyebrow": "Importante — leggi attentamente",
