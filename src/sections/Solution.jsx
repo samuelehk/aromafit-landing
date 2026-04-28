@@ -10,7 +10,7 @@ export default function Solution() {
         <div className="rounded-[2.5rem] overflow-hidden bg-cream-200">
           <SmartImage
             src={IMAGES.family}
-            alt="AromaFit HUSH family product shot"
+            alt="HUSH family product shot"
             label="Family product shot"
             className="w-full h-auto"
             imgClassName="object-contain w-full h-auto"

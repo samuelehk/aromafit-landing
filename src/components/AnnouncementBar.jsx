@@ -1,7 +1,10 @@
+import { useT } from "../lang/LanguageContext";
+
 export default function AnnouncementBar() {
+  const { t } = useT();
   return (
     <div className="bg-ink text-cream-50 text-xs uppercase tracking-widest py-2.5 text-center font-medium">
-      <span className="opacity-90">Free US shipping over $75 · 30-day quiet guarantee</span>
+      <span className="opacity-90">{t("announce.bar")}</span>
     </div>
   );
 }

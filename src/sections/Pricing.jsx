@@ -9,7 +9,7 @@ const plans = [
     desc: "Diffuser + 1 capsule of your choice.",
     days: "Lasts ~15-30 days",
     features: [
-      "AromaFit HUSH diffuser",
+      "HUSH Diffuser",
       "1 capsule (Mint, Citrus, or Spice)",
       "USB-C cable & adapter",
       "30-day refund — keep the device",
@@ -24,7 +24,7 @@ const plans = [
     desc: "Diffuser + 3 capsules. Mix scents however you want.",
     days: "Lasts ~45-90 days",
     features: [
-      "AromaFit HUSH diffuser",
+      "HUSH Diffuser",
       "3 capsules — pick any combination of scents",
       "HUSH Discovery box",
       "30-day refund — keep the device",
@@ -40,7 +40,7 @@ const plans = [
     desc: "Diffuser + 6 capsules for daily ritualists.",
     days: "Lasts ~90-180 days",
     features: [
-      "AromaFit HUSH diffuser",
+      "HUSH Diffuser",
       "6 capsules (mix & match scents)",
       "Wellness journal (printed)",
       "30-day refund — keep the device",

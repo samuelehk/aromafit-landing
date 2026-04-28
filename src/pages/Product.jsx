@@ -25,6 +25,7 @@ import {
 import SmartImage from "../components/SmartImage";
 import Stars from "../components/Stars";
 import { IMAGES } from "../images";
+import { useT } from "../lang/LanguageContext";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PRODUCT DATA
@@ -228,6 +229,7 @@ export default function Product() {
 // SHARED — ScentChip (used in pickers)
 // ─────────────────────────────────────────────────────────────────────────────
 function CapsuleSlots({ count, selectedScents, setScentAt }) {
+  const { t } = useT();
   return (
     <div className="space-y-2.5">
       {Array.from({ length: count }).map((_, idx) => {
@@ -238,7 +240,7 @@ function CapsuleSlots({ count, selectedScents, setScentAt }) {
             className="bg-cream-50 border border-cream-200 rounded-2xl p-3 flex items-center gap-3"
           >
             <div className="flex-shrink-0 text-[10px] uppercase tracking-widest text-ink-soft w-16">
-              Capsule {idx + 1}
+              {t("buybox.capsule")} {idx + 1}
             </div>
             <div className="flex-1 grid grid-cols-3 gap-1.5">
               {SCENTS.map((s) => {
@@ -284,6 +286,7 @@ function ProductHero({
   finalPrice,
   heroRef,
 }) {
+  const { t } = useT();
   const galleryImages = [
     { src: IMAGES.hero, label: "HUSH diffuser" },
     { src: IMAGES.family, label: "Full family" },
@@ -336,23 +339,20 @@ function ProductHero({
       <div className="space-y-6 lg:py-4">
         <div className="space-y-3">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="label-eyebrow">AromaFit · The HUSH Diffuser</span>
+            <span className="label-eyebrow">{t("buybox.eyebrow")}</span>
             <span className="inline-flex items-center gap-1.5 bg-mint-light/50 text-mint-dark text-[10px] uppercase tracking-widest px-2 py-1 rounded-full font-medium">
               <span className="h-1.5 w-1.5 rounded-full bg-mint-dark animate-pulse" />
-              Low stock · 47 left
+              {t("buybox.lowstock")}
             </span>
           </div>
           <h1 className="h-display text-4xl md:text-[3.4rem] leading-[1.02]">
-            Suppress appetite.
+            {t("buybox.h1.line1")}
             <br />
-            Lose weight.{" "}
-            <span className="italic text-rosegold">Without dieting.</span>
+            {t("buybox.h1.line2")}{" "}
+            <span className="italic text-rosegold">{t("buybox.h1.line3")}</span>
           </h1>
           <p className="text-base md:text-lg text-ink leading-snug font-medium">
-            HUSH uses clinically-studied aromatic compounds to switch off your
-            appetite — within <strong>7 minutes</strong> of pressing the button.
-            Backed by 15+ years of olfactory research. Used daily by 12,000+
-            Americans.
+            {t("buybox.subhead")}
           </p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1">
             <Stars />
@@ -386,7 +386,7 @@ function ProductHero({
         {/* MODE TOGGLE */}
         <div>
           <label className="text-xs uppercase tracking-widest text-ink font-medium mb-2.5 block">
-            1. What are you buying?
+            {t("buybox.q1")}
           </label>
           <div className="grid grid-cols-2 gap-2.5">
             <button
@@ -398,11 +398,13 @@ function ProductHero({
               }`}
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="font-display text-base">Starter Kit</span>
+                <span className="font-display text-base">
+                  {t("buybox.q1.starter.title")}
+                </span>
                 {mode === "starter" && <Check size={14} className="text-ink" />}
               </div>
               <div className="text-xs text-ink-soft leading-tight">
-                Diffuser + capsules
+                {t("buybox.q1.starter.desc")}
               </div>
             </button>
             <button
@@ -414,11 +416,13 @@ function ProductHero({
               }`}
             >
               <div className="flex items-center justify-between mb-1">
-                <span className="font-display text-base">Refills only</span>
+                <span className="font-display text-base">
+                  {t("buybox.q1.refill.title")}
+                </span>
                 {mode === "refill" && <Check size={14} className="text-ink" />}
               </div>
               <div className="text-xs text-ink-soft leading-tight">
-                Already own a HUSH
+                {t("buybox.q1.refill.desc")}
               </div>
             </button>
           </div>
@@ -427,7 +431,7 @@ function ProductHero({
         {/* BUNDLE SIZE PICKER */}
         <div>
           <label className="text-xs uppercase tracking-widest text-ink font-medium mb-2.5 block">
-            2. How many capsules?
+            {t("buybox.q2")}
           </label>
           <div className="space-y-2.5">
             {currentBundles.map((b) => (
@@ -484,9 +488,9 @@ function ProductHero({
         <div>
           <div className="flex items-center justify-between mb-2.5">
             <label className="text-xs uppercase tracking-widest text-ink font-medium">
-              3. Pick the scent for each capsule
+              {t("buybox.q3")}
             </label>
-            <span className="text-xs text-ink-soft">Mix freely</span>
+            <span className="text-xs text-ink-soft">{t("buybox.q3.helper")}</span>
           </div>
           <CapsuleSlots
             count={bundleSize}
@@ -494,34 +498,37 @@ function ProductHero({
             setScentAt={setScentAt}
           />
           <p className="text-[11px] text-ink-soft mt-2.5 leading-relaxed">
-            <strong className="text-ink">Mint</strong> for cravings ·{" "}
-            <strong className="text-ink">Citrus</strong> for the 3 PM crash ·{" "}
-            <strong className="text-ink">Spice</strong> after dinner
+            <strong className="text-ink">{t("buybox.scenthint.mint")}</strong>{" "}
+            {t("buybox.scenthint.suffix.mint")} ·{" "}
+            <strong className="text-ink">{t("buybox.scenthint.citrus")}</strong>{" "}
+            {t("buybox.scenthint.suffix.citrus")} ·{" "}
+            <strong className="text-ink">{t("buybox.scenthint.spice")}</strong>{" "}
+            {t("buybox.scenthint.suffix.spice")}
           </p>
         </div>
 
         {/* BUY BUTTON */}
         <div className="space-y-2.5 pt-2">
           <button className="btn-primary w-full !py-5 text-base !rounded-2xl">
-            Add to bag — ${finalPrice}
+            {t("buybox.cta")}{finalPrice}
             <ArrowRight size={18} />
           </button>
           <p className="text-xs text-center text-ink-soft">
-            Free US shipping · Ships in 1–2 business days · 30-day refund (keep the device)
+            {t("buybox.cta.subline")}
           </p>
         </div>
 
         {/* TRUST ROW */}
         <div className="grid grid-cols-3 gap-3 pt-5 border-t border-cream-200/80">
           {[
-            { icon: <Truck size={18} />, label: "Free US shipping" },
-            { icon: <Shield size={18} />, label: "30-day refund" },
-            { icon: <Leaf size={18} />, label: "Plant-derived" },
-          ].map((t, i) => (
+            { icon: <Truck size={18} />, label: t("buybox.trust.shipping") },
+            { icon: <Shield size={18} />, label: t("buybox.trust.refund") },
+            { icon: <Leaf size={18} />, label: t("buybox.trust.plant") },
+          ].map((tr, i) => (
             <div key={i} className="text-center">
-              <div className="inline-flex text-rosegold mb-1.5">{t.icon}</div>
+              <div className="inline-flex text-rosegold mb-1.5">{tr.icon}</div>
               <div className="text-[11px] uppercase tracking-widest text-ink-soft">
-                {t.label}
+                {tr.label}
               </div>
             </div>
           ))}
@@ -602,7 +609,7 @@ function StatsBar() {
           ))}
         </div>
         <p className="text-[11px] text-ink-soft/70 text-center mt-6 max-w-2xl mx-auto">
-          Internal data, AromaFit Q1 2026 cohort (n=2,184). Individual results
+          Internal data, HUSH Q1 2026 cohort (n=2,184). Individual results
           may vary depending on usage frequency and lifestyle.
         </p>
       </div>
@@ -693,9 +700,9 @@ function ScienceLed() {
         </div>
 
         <p className="text-[11px] text-cream-100/40 text-center mt-10 max-w-3xl mx-auto leading-relaxed">
-          Cited research is provided as scientific context. AromaFit is a wellness
-          brand and HUSH is a wellness aromatherapy device — not a registered
-          drug, supplement or medical product. Individual results vary.
+          Cited research is provided as scientific context. HUSH is a wellness
+          aromatherapy device — not a registered drug, supplement or medical
+          product. Individual results vary.
         </p>
       </div>
     </section>
@@ -1285,7 +1292,7 @@ function LeakedLab() {
         </div>
 
         <p className="text-[11px] text-ink-soft/70 text-center mt-8 max-w-2xl mx-auto">
-          Trade-marked names refer to AromaFit's proprietary aromatic blends and
+          Trade-marked names refer to HUSH's proprietary aromatic blends and
           are not pharmacological actives.
         </p>
       </div>
@@ -1298,7 +1305,7 @@ function LeakedLab() {
 // ─────────────────────────────────────────────────────────────────────────────
 function WhatsInBox() {
   const items = [
-    { icon: <Box size={18} />, label: "AromaFit HUSH diffuser" },
+    { icon: <Box size={18} />, label: "HUSH Diffuser" },
     { icon: <Sparkles size={18} />, label: "Your selected HUSH capsule(s)" },
     { icon: <Zap size={18} />, label: "Braided USB-C cable (1.5 m)" },
     { icon: <Coffee size={18} />, label: "USB-C wall adapter" },
@@ -1448,10 +1455,10 @@ function QuietScience() {
         </div>
 
         <p className="text-xs text-cream-100/40 mt-12 text-center leading-relaxed">
-          AromaFit is a wellness brand. HUSH is a wellness aromatherapy device,
-          not a registered drug. Scientific references provided for context.
-          Average results based on internal Q1 2026 customer cohort (n=2,184).
-          Individual results may vary.
+          HUSH is a wellness aromatherapy device, not a registered drug.
+          Scientific references provided for context. Average results based on
+          internal Q1 2026 customer cohort (n=2,184). Individual results may
+          vary.
         </p>
       </div>
     </section>
@@ -1469,7 +1476,7 @@ function FoundersNote() {
           <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden bg-cream-100 flex items-center justify-center">
             <SmartImage
               src={IMAGES.founder}
-              alt="The founder of AromaFit"
+              alt="The founder of HUSH"
               label="Founder portrait"
               className="w-full h-full"
               imgClassName="object-cover w-full h-full"
@@ -1504,7 +1511,7 @@ function FoundersNote() {
           </div>
           <div className="pt-2 flex items-center gap-3">
             <span className="font-display text-xl italic text-ink">
-              — The AromaFit team
+              — The HUSH team
             </span>
           </div>
         </div>
@@ -1837,6 +1844,7 @@ function FinalCTA({ onCta }) {
 // ─────────────────────────────────────────────────────────────────────────────
 function StickyAddToCart({ finalPrice, selectedBundle, selectedScents, heroRef, onCta }) {
   const [show, setShow] = useState(false);
+  const { t } = useT();
 
   useEffect(() => {
     const onScroll = () => {
@@ -1881,7 +1889,7 @@ function StickyAddToCart({ finalPrice, selectedBundle, selectedScents, heroRef, 
             </div>
             <div className="min-w-0">
               <div className="text-xs text-ink-soft truncate">
-                AromaFit · HUSH · {scentSummary}
+                HUSH · {scentSummary}
               </div>
               <div className="font-display text-base md:text-lg leading-tight truncate">
                 {selectedBundle.name} · ${finalPrice}
@@ -1892,7 +1900,7 @@ function StickyAddToCart({ finalPrice, selectedBundle, selectedScents, heroRef, 
             onClick={onCta}
             className="btn-primary !py-3 !px-5 md:!px-7 text-xs md:text-sm flex-shrink-0"
           >
-            Add to bag <ArrowRight size={14} />
+            {t("stickycart.add")} <ArrowRight size={14} />
           </button>
         </div>
       </div>

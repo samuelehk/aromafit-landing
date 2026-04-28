@@ -2,8 +2,10 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import SmartImage from "../components/SmartImage";
 import { IMAGES } from "../images";
+import { useT } from "../lang/LanguageContext";
 
 export default function FinalCTA() {
+  const { t } = useT();
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
       <div
@@ -25,23 +27,19 @@ export default function FinalCTA() {
         </div>
 
         <div className="space-y-8">
-          <div className="label-eyebrow">Stop dieting. Start hushing.</div>
+          <div className="label-eyebrow">{t("finalcta.eyebrow")}</div>
           <h2 className="h-display text-4xl md:text-6xl leading-tight">
-            Suppress your appetite.
+            {t("finalcta.h1.line1")}
             <br />
-            <span className="italic text-rosegold">Lose the weight.</span>
+            <span className="italic text-rosegold">{t("finalcta.h1.line2")}</span>
           </h2>
           <p className="text-lg text-ink-soft max-w-md leading-relaxed">
-            12,000+ Americans have already done it. Average loss:{" "}
-            <strong>4.1 kg in 8 weeks</strong>, no dieting, no exercise. The
-            risk is zero — you keep the device either way.
+            {t("finalcta.body")}
           </p>
           <Link to="/hush" className="btn-primary">
-            Get HUSH — from $69 <ArrowRight size={16} />
+            {t("finalcta.cta")} <ArrowRight size={16} />
           </Link>
-          <p className="text-xs text-ink-soft">
-            Free US shipping · 30-day refund (keep the device)
-          </p>
+          <p className="text-xs text-ink-soft">{t("finalcta.subline")}</p>
         </div>
       </div>
     </section>

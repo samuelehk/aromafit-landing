@@ -6,13 +6,13 @@ export default function Footer() {
       <div className="container-x py-20">
         <div className="grid md:grid-cols-4 gap-12">
           <div>
-            <div className="font-display text-3xl text-cream-50">AromaFit</div>
-            <div className="text-xs uppercase tracking-widest text-rosegold-light mt-1">
-              Wellness
+            <div className="font-display text-4xl text-cream-50">HUSH</div>
+            <div className="text-xs uppercase tracking-widest text-rosegold-light mt-2">
+              Hush your hunger
             </div>
             <p className="mt-6 text-sm leading-relaxed max-w-xs">
-              The aromatherapy diffuser that quiets the noise of cravings.
-              One device. Lasting change.
+              The aromatherapy diffuser that suppresses appetite — without
+              dieting, without willpower. Used daily by 12,000+ Americans.
             </p>
           </div>
 
@@ -26,6 +26,7 @@ export default function Footer() {
               <li><Link to="/hush" className="hover:text-rosegold-light">HUSH Citrus</Link></li>
               <li><Link to="/hush" className="hover:text-rosegold-light">HUSH Spice</Link></li>
               <li><Link to="/hush" className="hover:text-rosegold-light">Discovery Pack</Link></li>
+              <li><Link to="/hush" className="hover:text-rosegold-light">Refills only</Link></li>
             </ul>
           </div>
 
@@ -66,7 +67,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-cream-50/10 mt-16 pt-8 flex flex-col md:flex-row justify-between gap-4 text-xs text-cream-100/50">
-          <div>© {new Date().getFullYear()} AromaFit. All rights reserved.</div>
+          <div>© {new Date().getFullYear()} HUSH by AromaFit, Inc. All rights reserved.</div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-cream-50">Privacy</a>
             <a href="#" className="hover:text-cream-50">Terms</a>
@@ -75,11 +76,10 @@ export default function Footer() {
         </div>
 
         <p className="text-[10px] text-cream-100/40 mt-8 leading-relaxed max-w-3xl">
-          *AromaFit and HUSH are wellness products designed to support relaxation
-          and mindful moments. They are not intended to diagnose, treat, cure, or
-          prevent any disease. Individual experiences may vary. The aromatherapy
-          tradition references aromatic compounds long used in personal wellness
-          rituals.
+          *HUSH is a wellness aromatherapy device. It is not intended to
+          diagnose, treat, cure, or prevent any disease. Individual experiences
+          may vary. References to scientific literature are provided for context
+          only. AromaFit, Inc. is the legal entity behind HUSH.
         </p>
       </div>
     </footer>

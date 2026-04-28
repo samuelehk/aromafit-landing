@@ -75,9 +75,9 @@ export default function Science() {
         </div>
 
         <p className="text-xs text-cream-100/40 mt-12 max-w-3xl mx-auto text-center leading-relaxed">
-          Cited research provided as scientific context. AromaFit is a wellness
-          brand and HUSH is a wellness aromatherapy device — not a registered
-          drug, supplement or medical product. Individual results vary.
+          Cited research provided as scientific context. HUSH is a wellness
+          aromatherapy device — not a registered drug, supplement or medical
+          product. Individual results vary.
         </p>
       </div>
     </section>
